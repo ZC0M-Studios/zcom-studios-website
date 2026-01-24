@@ -1,0 +1,94 @@
+{
+    "_schema": {
+        "version": "1.0",
+        "description": "Extended metadata for tags registry - icons, colors, and category definitions",
+        "source_of_truth": "Database tags_registry table for core data, this file for presentation metadata"
+    },
+    "categories": {
+        "custom": {
+            "display_name": "Custom",
+            "description": "User-defined tags",
+            "color": "#808080",
+            "icon": "bi-tag"
+        },
+        "technology": {
+            "display_name": "Technology",
+            "description": "General technology topics",
+            "color": "#0099ff",
+            "icon": "bi-cpu"
+        },
+        "language": {
+            "display_name": "Programming Language",
+            "description": "Programming and scripting languages",
+            "color": "#00cc52",
+            "icon": "bi-code-slash"
+        },
+        "framework": {
+            "display_name": "Framework",
+            "description": "Development frameworks and libraries",
+            "color": "#ff6b00",
+            "icon": "bi-box"
+        },
+        "tool": {
+            "display_name": "Tool",
+            "description": "Development tools and utilities",
+            "color": "#9933ff",
+            "icon": "bi-tools"
+        },
+        "topic": {
+            "display_name": "Topic",
+            "description": "General subject areas",
+            "color": "#ffaa00",
+            "icon": "bi-chat-dots"
+        },
+        "skill": {
+            "display_name": "Skill",
+            "description": "Professional skills and competencies",
+            "color": "#00cc99",
+            "icon": "bi-lightning"
+        },
+        "industry": {
+            "display_name": "Industry",
+            "description": "Industry sectors and domains",
+            "color": "#cc0066",
+            "icon": "bi-building"
+        }
+    },
+    "tag_overrides": {
+        "_comment": "Override presentation for specific tags by slug",
+        "javascript": {
+            "color": "#f7df1e",
+            "icon": "bi-filetype-js"
+        },
+        "python": {
+            "color": "#3776ab",
+            "icon": "bi-filetype-py"
+        },
+        "php": {
+            "color": "#777bb4",
+            "icon": "bi-filetype-php"
+        },
+        "react": {
+            "color": "#61dafb",
+            "icon": "bi-filetype-jsx"
+        },
+        "ai": {
+            "color": "#ff00ff",
+            "icon": "bi-robot"
+        },
+        "machine-learning": {
+            "color": "#ff00ff",
+            "icon": "bi-diagram-3"
+        }
+    },
+    "defaults": {
+        "text_color": "#ffffff",
+        "bg_color": "#333333",
+        "border_color": "#666666",
+        "border_type": "solid",
+        "shadow_color": null,
+        "icon": "bi-tag"
+    },
+    "border_types": ["solid", "dashed", "dotted", "double", "none"]
+}
+

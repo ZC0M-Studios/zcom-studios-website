@@ -1,0 +1,28 @@
+# ZCOM Studios robots.txt
+# UniqueID: 900010
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /data/
+Disallow: /cgi-bin/
+
+# Disallow API endpoints from being indexed
+Disallow: /api/
+
+# Allow specific content
+Allow: /articles/
+Allow: /portfolio/
+Allow: /prompts/
+Allow: /tools/
+Allow: /tags/
+
+# Sitemap location
+Sitemap: https://zcomstudios.com/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
+

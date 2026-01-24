@@ -1,0 +1,76 @@
+{
+    "_schema": {
+        "version": "1.0",
+        "description": "Extended metadata for tools/utilities - categories and presentation options",
+        "source_of_truth": "Database tools table for core data, this file for presentation metadata"
+    },
+    "categories": {
+        "formatter": {
+            "display_name": "Formatters",
+            "description": "Code and data formatting tools",
+            "icon": "bi-text-indent-left",
+            "color": "#0099ff"
+        },
+        "converter": {
+            "display_name": "Converters",
+            "description": "Data conversion and transformation tools",
+            "icon": "bi-arrow-left-right",
+            "color": "#00cc52"
+        },
+        "generator": {
+            "display_name": "Generators",
+            "description": "Code and content generation tools",
+            "icon": "bi-magic",
+            "color": "#9933ff"
+        },
+        "validator": {
+            "display_name": "Validators",
+            "description": "Data and syntax validation tools",
+            "icon": "bi-check2-circle",
+            "color": "#ff6b00"
+        },
+        "encoder": {
+            "display_name": "Encoders/Decoders",
+            "description": "Encoding and decoding utilities",
+            "icon": "bi-lock",
+            "color": "#ffaa00"
+        },
+        "calculator": {
+            "display_name": "Calculators",
+            "description": "Calculation and computation tools",
+            "icon": "bi-calculator",
+            "color": "#00cc99"
+        },
+        "text": {
+            "display_name": "Text Utilities",
+            "description": "Text manipulation and analysis tools",
+            "icon": "bi-fonts",
+            "color": "#cc0066"
+        },
+        "dev": {
+            "display_name": "Developer Tools",
+            "description": "General development utilities",
+            "icon": "bi-code-slash",
+            "color": "#808080"
+        }
+    },
+    "template": {
+        "id": "",
+        "name": "",
+        "slug": "",
+        "description": "",
+        "page_url": "",
+        "category": "dev",
+        "featured": false,
+        "tags": [],
+        "instructions": "",
+        "example_input": "",
+        "example_output": ""
+    },
+    "defaults": {
+        "category": "dev",
+        "icon": "bi-tools",
+        "color": "#808080"
+    }
+}
+

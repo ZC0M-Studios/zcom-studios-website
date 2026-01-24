@@ -1,0 +1,708 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Orbitron:wght@400..900&family=Electrolize&family=Share+Tech+Mono&display=swap");
+:root {
+  --fui-void: #000000;
+  --fui-abyss: #0a0f12;
+  --fui-deep-space: #0d1419;
+  --fui-dark-matter: #111a1f;
+  --fui-carbon: #152228;
+  --fui-gunmetal: #1a2a30;
+  --fui-primary-400: #3dd9d9;
+  --fui-primary-500: #00cccc;
+  --fui-primary-600: #00b3b3;
+  --fui-primary-700: #009999;
+  --fui-primary-800: #007a7a;
+  --fui-primary-900: #005f5f;
+  --fui-text-primary: #e8f4f8;
+  --fui-text-secondary: #8fa4b0;
+  --fui-text-tertiary: #4a5d6a;
+  --fui-text-accent: #00d4ff;
+  --fui-success: #00ff88;
+  --fui-warning: #ffaa00;
+  --fui-error: #ff2244;
+  --fui-info: #4488ff;
+  --fui-scanning: #aa66ff;
+  --fui-standby: #4a5d6a;
+  --fui-font-mono: JetBrains Mono, Fira Code, SF Mono, Consolas, monospace;
+  --fui-font-display: Orbitron, Eurostile, Bank Gothic, sans-serif;
+  --fui-font-ui: Electrolize, Inter, SF Pro Display, system-ui, sans-serif;
+  --fui-space-1: 4px;
+  --fui-space-2: 8px;
+  --fui-space-3: 12px;
+  --fui-space-4: 16px;
+  --fui-space-6: 24px;
+  --fui-space-8: 32px;
+  --fui-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --fui-duration-fast: 150ms;
+  --fui-duration-normal: 300ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.fui-theme {
+  font-family: "Electrolize", "Inter", "SF Pro Display", system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #e8f4f8;
+  background: #0a0f12;
+  min-height: 100vh;
+}
+
+body.fui-theme.fui-scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0f12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #007a7a;
+  border: 1px solid #009999;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #009999;
+}
+
+::-moz-selection {
+  background: #009999;
+  color: #e8f4f8;
+}
+
+::selection {
+  background: #009999;
+  color: #e8f4f8;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_TYPOGRAPHY]
+    FUNCTION: FUI Typography Utility Classes
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Data display, labels, monospace utilities
+    UniqueID: 790001
+=========================================================== */
+.fui-mono {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+.fui-label {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8fa4b0;
+}
+
+.fui-data {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-size: 0.8125rem;
+  color: #3dd9d9;
+}
+
+.fui-micro {
+  font-family: "Share Tech Mono", "IBM Plex Mono", monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #4a5d6a;
+}
+
+.fui-display {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #00cccc;
+}
+
+.fui-header {
+  font-family: "Orbitron", "Eurostile", "Bank Gothic", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e8f4f8;
+}
+
+.fui-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_STATUS_COLORS]
+    FUNCTION: FUI Semantic Status Colors
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Color utilities for status states
+    UniqueID: 790002
+=========================================================== */
+.fui-success {
+  color: #00ff88;
+}
+
+.fui-success-dim {
+  color: #00cc6a;
+}
+
+.fui-warning {
+  color: #ffaa00;
+}
+
+.fui-warning-dim {
+  color: #cc8800;
+}
+
+.fui-error {
+  color: #ff2244;
+}
+
+.fui-error-dim {
+  color: #cc1a33;
+}
+
+.fui-info {
+  color: #4488ff;
+}
+
+.fui-scanning {
+  color: #aa66ff;
+}
+
+.fui-standby {
+  color: #4a5d6a;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_GLOW_EFFECTS]
+    FUNCTION: FUI Glow Utility Classes
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Box and text glow effects
+    UniqueID: 790003
+=========================================================== */
+.fui-glow {
+  box-shadow: 0 0 10px rgba(0, 204, 204, 0.3);
+}
+
+.fui-glow-strong {
+  box-shadow: 0 0 10px rgba(0, 204, 204, 0.4), 0 0 20px rgba(0, 204, 204, 0.2), 0 0 40px rgba(0, 204, 204, 0.1);
+}
+
+.fui-text-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.fui-glow-pulse {
+  animation: fui-glow-pulse 2s ease-in-out infinite;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_PANELS]
+    FUNCTION: FUI Panel & Frame Components
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Corner brackets, hex frames, panels
+    UniqueID: 790004
+=========================================================== */
+.fui-panel {
+  position: relative;
+  background: #0d1419;
+  border: 1px solid #007a7a;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+.fui-panel::before, .fui-panel::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: #00cccc;
+  border-style: solid;
+  pointer-events: none;
+}
+.fui-panel::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.fui-panel::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+.fui-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, rgba(0, 204, 204, 0.1) 0%, transparent 100%);
+  border-bottom: 1px solid #005f5f;
+}
+
+.fui-panel-body {
+  flex: 1;
+  padding: 12px;
+  overflow: auto;
+}
+
+.fui-frame {
+  position: relative;
+  padding: 16px;
+}
+.fui-frame::before, .fui-frame::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: #00cccc;
+  border-style: solid;
+  pointer-events: none;
+}
+.fui-frame::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.fui-frame::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+.fui-hex {
+  clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+}
+
+/* ========================================================
+    //ANCHOR [FUI_DATA_COMPONENTS]
+    FUNCTION: FUI Data Display Components
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Key-value pairs, status indicators, progress
+    UniqueID: 790005
+=========================================================== */
+.fui-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.fui-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.fui-status.online {
+  color: #00ff88;
+}
+.fui-status.online::before {
+  animation: fui-pulse 2s ease-in-out infinite;
+}
+.fui-status.offline {
+  color: #ff2244;
+}
+.fui-status.warning {
+  color: #ffaa00;
+}
+.fui-status.standby {
+  color: #4a5d6a;
+}
+.fui-status.scanning {
+  color: #aa66ff;
+}
+.fui-status.scanning::before {
+  animation: fui-pulse 2s ease-in-out infinite;
+}
+
+.fui-data-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+  border-bottom: 1px solid #1a2a30;
+}
+.fui-data-pair:last-child {
+  border-bottom: none;
+}
+
+.fui-data-key {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8fa4b0;
+}
+
+.fui-data-val {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-size: 0.8125rem;
+  color: #3dd9d9;
+}
+
+.fui-progress {
+  display: flex;
+  gap: 2px;
+  height: 16px;
+}
+
+.fui-progress-segment {
+  flex: 1;
+  background: #111a1f;
+  border: 1px solid #005f5f;
+}
+.fui-progress-segment.filled {
+  background: #00b3b3;
+  border-color: #00cccc;
+  box-shadow: 0 0 4px rgba(0, 204, 204, 0.3);
+}
+
+.fui-progress-bar {
+  height: 20px;
+  background: #0a0f12;
+  border: 1px solid #007a7a;
+  position: relative;
+  overflow: hidden;
+}
+
+.fui-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #009999 0%, #00cccc 100%);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================================
+    //ANCHOR [FUI_BUTTONS]
+    FUNCTION: FUI Button Components
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Angled buttons with glow effects
+    UniqueID: 790006
+=========================================================== */
+.fui-btn, .fui-btn-danger, .fui-btn-primary {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border: 1px solid #007a7a;
+  background: #111a1f;
+  color: #e8f4f8;
+  cursor: pointer;
+  position: relative;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px);
+}
+.fui-btn:hover, .fui-btn-danger:hover, .fui-btn-primary:hover {
+  background: #152228;
+  border-color: #00cccc;
+  color: #3dd9d9;
+}
+.fui-btn:active, .fui-btn-danger:active, .fui-btn-primary:active {
+  background: #005f5f;
+}
+
+.fui-btn-primary {
+  background: linear-gradient(180deg, #009999 0%, #005f5f 100%);
+  border-color: #00cccc;
+  color: #e8f4f8;
+}
+.fui-btn-primary:hover {
+  background: linear-gradient(180deg, #00b3b3 0%, #007a7a 100%);
+  box-shadow: 0 0 20px rgba(0, 204, 204, 0.3);
+}
+
+.fui-btn-danger {
+  border-color: #cc1a33;
+  color: #ff2244;
+}
+.fui-btn-danger:hover {
+  background: rgba(255, 34, 68, 0.1);
+  border-color: #ff2244;
+  box-shadow: 0 0 15px rgba(255, 34, 68, 0.2);
+}
+
+.fui-btn-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_INPUTS]
+    FUNCTION: FUI Form Input Components
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Text inputs with FUI styling
+    UniqueID: 790007
+=========================================================== */
+.fui-input {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.8125rem;
+  padding: 8px 12px;
+  background: #0a0f12;
+  border: 1px solid #007a7a;
+  color: #e8f4f8;
+  caret-color: #00cccc;
+  width: 100%;
+}
+.fui-input:focus {
+  outline: none;
+  border-color: #00cccc;
+  box-shadow: inset 0 0 10px rgba(0, 204, 204, 0.1), 0 0 5px rgba(0, 204, 204, 0.2);
+}
+.fui-input::-moz-placeholder {
+  color: #4a5d6a;
+  font-style: italic;
+}
+.fui-input::placeholder {
+  color: #4a5d6a;
+  font-style: italic;
+}
+
+.fui-input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.fui-input-label {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  background: #111a1f;
+  border: 1px solid #007a7a;
+  border-right: none;
+  color: #8fa4b0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_NAVIGATION]
+    FUNCTION: FUI Navigation Components
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Tabs, nav lists, breadcrumbs
+    UniqueID: 790008
+=========================================================== */
+.fui-tabs {
+  display: flex;
+  border-bottom: 1px solid #005f5f;
+}
+
+.fui-tab {
+  font-family: "Orbitron", "Eurostile", "Bank Gothic", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  color: #8fa4b0;
+  cursor: pointer;
+  position: relative;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fui-tab:hover {
+  color: #e8f4f8;
+}
+.fui-tab.active {
+  color: #3dd9d9;
+  background: linear-gradient(180deg, rgba(0, 204, 204, 0.1) 0%, transparent 100%);
+}
+.fui-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #00cccc;
+  box-shadow: 0 0 10px #00cccc;
+}
+
+.fui-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fui-nav-item {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  color: #8fa4b0;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fui-nav-item:hover {
+  background: rgba(0, 204, 204, 0.05);
+  color: #e8f4f8;
+}
+.fui-nav-item.active {
+  background: rgba(0, 204, 204, 0.1);
+  border-left-color: #00cccc;
+  color: #3dd9d9;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_ANIMATIONS]
+    FUNCTION: FUI Keyframe Animations
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Pulse, glow, scan, blink effects
+    UniqueID: 790009
+=========================================================== */
+@keyframes fui-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+@keyframes fui-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 204, 204, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 204, 204, 0.5), 0 0 40px rgba(0, 204, 204, 0.3);
+  }
+}
+@keyframes fui-scan-sweep {
+  from {
+    background-position: -100% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+@keyframes fui-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+@keyframes fui-data-tick {
+  0% {
+    color: #3dd9d9;
+  }
+  50% {
+    color: #e8f4f8;
+  }
+  100% {
+    color: #3dd9d9;
+  }
+}
+@keyframes fui-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fui-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fui-animate-scan {
+  position: relative;
+  overflow: hidden;
+}
+.fui-animate-scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 204, 204, 0.3) 50%, transparent 100%);
+  background-size: 50% 100%;
+  animation: fui-scan-sweep 2s linear infinite;
+}
+
+.fui-animate-blink::after {
+  content: "█";
+  animation: fui-blink 1s step-end infinite;
+  color: #00cccc;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+:focus-visible {
+  outline: 2px solid #00cccc;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}/*# sourceMappingURL=style-fui.css.map */

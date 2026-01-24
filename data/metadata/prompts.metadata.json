@@ -1,0 +1,69 @@
+{
+    "_schema": {
+        "version": "1.0",
+        "description": "Extended metadata for prompts - categories, templates, and usage patterns",
+        "source_of_truth": "Database prompts table for core data, this file for presentation and template metadata"
+    },
+    "categories": {
+        "coding": {
+            "display_name": "Coding & Development",
+            "description": "Prompts for code generation, debugging, and development tasks",
+            "icon": "bi-code-slash",
+            "color": "#00cc52"
+        },
+        "writing": {
+            "display_name": "Writing & Content",
+            "description": "Prompts for content creation, editing, and copywriting",
+            "icon": "bi-pencil",
+            "color": "#0099ff"
+        },
+        "analysis": {
+            "display_name": "Analysis & Research",
+            "description": "Prompts for data analysis, research, and insights",
+            "icon": "bi-graph-up",
+            "color": "#ff6b00"
+        },
+        "creative": {
+            "display_name": "Creative & Design",
+            "description": "Prompts for creative projects, brainstorming, and design",
+            "icon": "bi-palette",
+            "color": "#9933ff"
+        },
+        "productivity": {
+            "display_name": "Productivity & Workflow",
+            "description": "Prompts for task management, planning, and optimization",
+            "icon": "bi-lightning",
+            "color": "#ffaa00"
+        },
+        "learning": {
+            "display_name": "Learning & Education",
+            "description": "Prompts for learning, tutoring, and explanation",
+            "icon": "bi-book",
+            "color": "#00cc99"
+        }
+    },
+    "template": {
+        "id": "",
+        "title": "",
+        "slug": "",
+        "description": "",
+        "prompt_text": "",
+        "category": "coding|writing|analysis|creative|productivity|learning",
+        "visibility": "public|private|unlisted",
+        "featured": false,
+        "variables": [],
+        "example_input": "",
+        "example_output": "",
+        "best_practices": [],
+        "compatible_models": ["claude", "gpt-4", "gemini"],
+        "estimated_tokens": 0,
+        "tags": []
+    },
+    "defaults": {
+        "visibility": "public",
+        "category": "coding",
+        "icon": "bi-chat-left-text",
+        "color": "#808080"
+    }
+}
+

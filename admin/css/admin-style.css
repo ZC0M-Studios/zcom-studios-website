@@ -1,0 +1,907 @@
+/* ========================================================
+   ZCOM Studios Admin Dashboard Styles
+   BATCOMPUTER UI Design System - Dark Knight Tactical Interface
+   UniqueID: 793100
+=========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Background Layers (Pure Black Theme) */
+    --bat-void: #000000;
+    --bat-black: #0a0a0a;
+    --bat-dark: #0d0d0d;
+    --bat-panel: #111111;
+    --bat-elevated: #1a1a1a;
+    --bat-surface: #222222;
+
+    /* Primary Accent (Blood Red - Wayne Tech) */
+    --bat-red: #cc0000;
+    --bat-red-bright: #ff0033;
+    --bat-red-dim: #990000;
+    --bat-red-dark: #660000;
+    --bat-red-glow: rgba(255, 0, 51, 0.6);
+    --bat-red-bg: rgba(204, 0, 0, 0.1);
+
+    /* Secondary Accent (White/Gray for data) */
+    --bat-white: #ffffff;
+    --bat-gray-100: #e0e0e0;
+    --bat-gray-200: #b0b0b0;
+    --bat-gray-300: #808080;
+    --bat-gray-400: #606060;
+    --bat-gray-500: #404040;
+    --bat-gray-600: #303030;
+
+    /* Status Colors */
+    --bat-online: #00ff66;
+    --bat-online-dim: #00cc52;
+    --bat-warning: #ffaa00;
+    --bat-warning-dim: #cc8800;
+    --bat-error: #ff0033;
+    --bat-info: #0099ff;
+    --bat-encrypted: #ff00ff;
+
+    /* Text Colors */
+    --bat-text-primary: #ffffff;
+    --bat-text-secondary: #808080;
+    --bat-text-tertiary: #505050;
+    --bat-text-data: #b0b0b0;
+
+    /* Border Colors */
+    --bat-border: #333333;
+    --bat-border-bright: #444444;
+    --bat-border-red: rgba(204, 0, 0, 0.5);
+
+    /* Legacy mappings for compatibility */
+    --admin-bg: var(--bat-void);
+    --admin-bg-secondary: var(--bat-panel);
+    --admin-sidebar-bg: var(--bat-black);
+    --admin-header-bg: var(--bat-black);
+    --admin-border: var(--bat-border);
+    --admin-text: var(--bat-text-primary);
+    --admin-text-muted: var(--bat-text-secondary);
+    --admin-accent: var(--bat-red);
+    --admin-accent-secondary: var(--bat-red-dim);
+    --admin-success: var(--bat-online);
+    --admin-warning: var(--bat-warning);
+    --admin-danger: var(--bat-red-bright);
+    --admin-shadow: var(--bat-red-glow);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.admin-body {
+    background: var(--bat-void);
+    color: var(--bat-text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    min-height: 100vh;
+}
+
+/* Override any potential overlays from bat-theme */
+.admin-body::before,
+.admin-body::after {
+    display: none !important;
+}
+
+.admin-body.bat-theme::before,
+.admin-body.bat-theme::after {
+    display: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bat-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bat-gray-500);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bat-gray-400);
+}
+
+::selection {
+    background: var(--bat-red);
+    color: var(--bat-white);
+}
+
+/* Admin Wrapper */
+.admin-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header - Batcomputer Style */
+.admin-header {
+    background: var(--bat-black);
+    border-bottom: 1px solid var(--bat-border);
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Red accent line on header */
+.admin-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--bat-red);
+    box-shadow: 0 0 10px var(--bat-red-glow);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-toggle {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    color: var(--bat-text-primary);
+    font-size: 1.2rem;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.sidebar-toggle:hover {
+    background: var(--bat-elevated);
+    border-color: var(--bat-gray-400);
+}
+
+.header-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--bat-gray-300);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-stats {
+    display: flex;
+    gap: 12px;
+}
+
+.stat-badge {
+    background: var(--bat-red-bg);
+    border: 1px solid var(--bat-border-red);
+    color: var(--bat-red-bright);
+    padding: 4px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    color: var(--bat-text-secondary);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+.btn-logout {
+    background: var(--bat-red-dark);
+    border: 1px solid var(--bat-red);
+    color: var(--bat-white);
+    padding: 6px 12px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.btn-logout:hover {
+    background: var(--bat-red-dim);
+    border-color: var(--bat-red-bright);
+    box-shadow: 0 0 10px var(--bat-red-glow);
+    color: var(--bat-white);
+}
+
+/* Sidebar - Batcomputer Style */
+.admin-sidebar {
+    background: var(--bat-black);
+    width: 200px;
+    border-right: 1px solid var(--bat-border);
+    position: fixed;
+    left: 0;
+    top: 45px;
+    bottom: 0;
+    overflow-y: auto;
+    transition: transform 0.2s ease;
+    z-index: 999;
+}
+
+.admin-sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.sidebar-nav {
+    padding: 12px 0;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-section {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bat-gray-400);
+    padding: 16px 12px 8px;
+    margin-top: 8px;
+}
+
+.nav-item {
+    margin: 2px 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    color: var(--bat-text-data);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border-left: 2px solid transparent;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--bat-text-primary);
+    border-left-color: var(--bat-gray-400);
+}
+
+.nav-link.active {
+    background: var(--bat-red-bg);
+    color: var(--bat-red-bright);
+    border-left-color: var(--bat-red);
+}
+
+.nav-link i {
+    font-size: 1rem;
+    width: 20px;
+    color: var(--bat-gray-400);
+}
+
+.nav-link:hover i,
+.nav-link.active i {
+    color: var(--bat-red);
+}
+
+/* Main Content - Batcomputer Style */
+.admin-main {
+    margin-left: 200px;
+    padding: 16px;
+    flex: 1;
+    transition: margin-left 0.2s ease;
+    background: var(--bat-void);
+}
+
+.admin-main.expanded {
+    margin-left: 0;
+}
+
+/* Page Header - Batcomputer Style */
+.page-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--bat-border);
+}
+
+.page-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bat-red);
+    margin-bottom: 4px;
+    text-shadow: 0 0 8px var(--bat-red), 0 0 12px rgba(255, 0, 51, 0.5);
+}
+
+.page-header p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--bat-gray-400);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Panels/Cards - Batcomputer Style */
+.admin-card {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    padding: 12px;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header {
+    background: var(--bat-black);
+    border-bottom: 1px solid var(--bat-border);
+    padding: 8px 12px;
+    margin: -12px -12px 12px -12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bat-text-primary);
+    margin: 0;
+}
+
+/* Buttons - Batcomputer Style */
+.btn-scifi {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    background: var(--bat-red-dark);
+    border: 1px solid var(--bat-red);
+    color: var(--bat-white);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.btn-scifi:hover {
+    background: var(--bat-red-dim);
+    border-color: var(--bat-red-bright);
+    box-shadow: 0 0 10px var(--bat-red-glow);
+    color: var(--bat-white);
+}
+
+.btn-outline {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    color: var(--bat-text-primary);
+}
+
+.btn-outline:hover {
+    background: var(--bat-elevated);
+    border-color: var(--bat-gray-400);
+    color: var(--bat-white);
+}
+
+.btn-danger {
+    background: var(--bat-red-dark);
+    border: 1px solid var(--bat-red);
+    color: var(--bat-white);
+}
+
+.btn-danger:hover {
+    background: var(--bat-red-dim);
+    box-shadow: 0 0 10px var(--bat-red-glow);
+}
+
+.btn-success {
+    background: rgba(0, 255, 102, 0.1);
+    border: 1px solid var(--bat-online);
+    color: var(--bat-online);
+}
+
+.btn-success:hover {
+    background: rgba(0, 255, 102, 0.2);
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 9px;
+}
+
+/* Tables - Batcomputer Style */
+.admin-table {
+    width: 100%;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.admin-table thead {
+    background: var(--bat-black);
+    border-bottom: 1px solid var(--bat-border);
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 4px 8px;
+    font-weight: 500;
+    color: var(--bat-gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.admin-table th:hover {
+    color: var(--bat-text-primary);
+}
+
+.admin-table td {
+    padding: 4px 8px;
+    color: var(--bat-text-data);
+    border-bottom: 1px solid var(--bat-gray-600);
+}
+
+.admin-table td.highlight {
+    color: var(--bat-white);
+}
+
+.admin-table td.red {
+    color: var(--bat-red-bright);
+}
+
+.admin-table td.green {
+    color: var(--bat-online);
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Status Badges - Batcomputer Style */
+.badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+}
+
+.badge-success {
+    background: rgba(0, 255, 102, 0.1);
+    color: var(--bat-online);
+    border: 1px solid var(--bat-online-dim);
+}
+
+.badge-warning {
+    background: rgba(255, 170, 0, 0.1);
+    color: var(--bat-warning);
+    border: 1px solid var(--bat-warning-dim);
+}
+
+.badge-danger {
+    background: var(--bat-red-bg);
+    color: var(--bat-red-bright);
+    border: 1px solid var(--bat-red-dim);
+}
+
+.badge-info {
+    background: rgba(0, 153, 255, 0.1);
+    color: var(--bat-info);
+    border: 1px solid var(--bat-info);
+}
+
+/* Forms - Batcomputer Style */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bat-gray-400);
+    margin-bottom: 4px;
+    display: block;
+}
+
+.form-control {
+    background: var(--bat-black);
+    border: 1px solid var(--bat-border);
+    color: var(--bat-text-primary);
+    padding: 8px 12px;
+    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    transition: all 0.15s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--bat-red);
+    box-shadow: 0 0 10px var(--bat-red-glow);
+    background: var(--bat-dark);
+}
+
+.form-control::placeholder {
+    color: var(--bat-text-tertiary);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Stats Grid - Batcomputer Style */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.15s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--bat-border-red);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    color: var(--bat-red);
+}
+
+.stat-info h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bat-gray-400);
+    margin: 0 0 2px 0;
+}
+
+.stat-info p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--bat-white);
+    margin: 0;
+}
+
+/* Pagination - Batcomputer Style */
+.pagination {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.page-link {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    color: var(--bat-text-data);
+    padding: 4px 10px;
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    transition: all 0.15s ease;
+}
+
+.page-link:hover {
+    background: var(--bat-elevated);
+    border-color: var(--bat-gray-400);
+    color: var(--bat-white);
+}
+
+.page-link.active {
+    background: var(--bat-red-dark);
+    border-color: var(--bat-red);
+    color: var(--bat-white);
+}
+
+/* Toast Notifications - Batcomputer Style */
+.toast {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    color: var(--bat-text-primary);
+    box-shadow: 0 0 20px var(--bat-red-glow);
+}
+
+.toast-header {
+    background: var(--bat-black);
+    border-bottom: 1px solid var(--bat-border);
+    color: var(--bat-red);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .admin-sidebar.show {
+        transform: translateX(0);
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .header-title {
+        font-size: 10px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading Spinner - Batcomputer Style */
+.spinner {
+    border: 2px solid var(--bat-gray-600);
+    border-top: 2px solid var(--bat-red);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 16px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Action Buttons - Batcomputer Style */
+.action-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-icon {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    color: var(--bat-text-data);
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-icon:hover {
+    background: var(--bat-elevated);
+    border-color: var(--bat-gray-400);
+    color: var(--bat-white);
+}
+
+.btn-icon.danger:hover {
+    background: var(--bat-red-dark);
+    border-color: var(--bat-red);
+    color: var(--bat-red-bright);
+}
+
+/* Empty State - Batcomputer Style */
+.empty-state {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--bat-text-secondary);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    color: var(--bat-gray-500);
+    margin-bottom: 12px;
+}
+
+.empty-state h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bat-text-primary);
+    margin-bottom: 4px;
+}
+
+.empty-state p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--bat-gray-400);
+}
+
+/* Batcomputer Animations */
+@keyframes bat-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes bat-pulse-fast {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+@keyframes bat-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.bat-blink {
+    animation: bat-blink 1s step-end infinite;
+}
+
+.bat-pulse {
+    animation: bat-pulse 2s ease-in-out infinite;
+}
+
+/* Status Indicators */
+.bat-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bat-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+}
+
+.bat-status.online {
+    color: var(--bat-online);
+}
+
+.bat-status.online::before {
+    animation: bat-pulse 2s ease-in-out infinite;
+}
+
+.bat-status.offline {
+    color: var(--bat-gray-500);
+}
+
+.bat-status.alert {
+    color: var(--bat-red-bright);
+}
+
+.bat-status.alert::before {
+    animation: bat-pulse-fast 0.5s ease-in-out infinite;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--bat-red);
+    outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Text utilities */
+.text-muted {
+    color: var(--bat-text-secondary) !important;
+}
+
+/* Alert styles override */
+.alert {
+    background: var(--bat-panel);
+    border: 1px solid var(--bat-border);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+}
+
+.alert-success {
+    border-color: var(--bat-online-dim);
+    color: var(--bat-online);
+}
+
+.alert-danger {
+    border-color: var(--bat-red);
+    color: var(--bat-red-bright);
+}
+
+.alert-warning {
+    border-color: var(--bat-warning-dim);
+    color: var(--bat-warning);
+}
+
+/* List group styling */
+.list-group-item {
+    background: var(--bat-panel) !important;
+    border-color: var(--bat-border) !important;
+    color: var(--bat-text-data);
+}
+
+.list-group-item:hover {
+    background: rgba(255, 255, 255, 0.02) !important;
+}

@@ -1,0 +1,993 @@
+// ==============================================
+// BATCOMPUTER UI DESIGN SYSTEM
+// Dark Knight Tactical Interface
+// Based on Wayne Enterprises HUD Reference
+// ==============================================
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+// ========================================================
+// SECTION 1: BATCOMPUTER COLOR PALETTE
+// ========================================================
+
+// Background Layers (Pure Black Theme)
+$bat-void: #000000;
+$bat-black: #0a0a0a;
+$bat-dark: #0d0d0d;
+$bat-panel: #111111;
+$bat-elevated: #1a1a1a;
+$bat-surface: #222222;
+
+// Primary Accent (Blood Red - Wayne Tech)
+$bat-red: #cc0000;
+$bat-red-bright: #ff0033;
+$bat-red-dim: #990000;
+$bat-red-dark: #660000;
+$bat-red-glow: rgba(255, 0, 51, 0.6);
+$bat-red-bg: rgba(204, 0, 0, 0.1);
+
+// Secondary Accent (White/Gray for data)
+$bat-white: #ffffff;
+$bat-gray-100: #e0e0e0;
+$bat-gray-200: #b0b0b0;
+$bat-gray-300: #808080;
+$bat-gray-400: #606060;
+$bat-gray-500: #404040;
+$bat-gray-600: #303030;
+
+// Status Colors
+$bat-online: #00ff66;
+$bat-online-dim: #00cc52;
+$bat-warning: #ffaa00;
+$bat-warning-dim: #cc8800;
+$bat-error: #ff0033;
+$bat-info: #0099ff;
+$bat-encrypted: #ff00ff;
+
+// Text Colors
+$bat-text-primary: #ffffff;
+$bat-text-secondary: #808080;
+$bat-text-tertiary: #505050;
+$bat-text-data: #b0b0b0;
+
+// Border Colors
+$bat-border: #333333;
+$bat-border-bright: #444444;
+$bat-border-red: rgba(204, 0, 0, 0.5);
+
+// ========================================================
+// SECTION 2: TYPOGRAPHY
+// ========================================================
+$bat-font-display: 'Orbitron', sans-serif;
+$bat-font-data: 'JetBrains Mono', monospace;
+$bat-font-mono: 'Share Tech Mono', monospace;
+$bat-font-ui: 'Rajdhani', sans-serif;
+
+// ========================================================
+// SECTION 3: SPACING
+// ========================================================
+$bat-unit: 4px;
+$bat-space-1: 4px;
+$bat-space-2: 8px;
+$bat-space-3: 12px;
+$bat-space-4: 16px;
+$bat-space-5: 20px;
+$bat-space-6: 24px;
+$bat-space-8: 32px;
+
+// ========================================================
+// SECTION 4: MIXINS
+// ========================================================
+
+// Scanline overlay effect
+@mixin bat-scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+}
+
+// Red accent line (top border glow)
+@mixin bat-red-accent {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $bat-red;
+    box-shadow: 0 0 10px $bat-red-glow;
+  }
+}
+
+// Corner brackets
+@mixin bat-corners($size: 8px, $thickness: 1px, $color: $bat-gray-400) {
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: $size;
+    height: $size;
+    border-color: $color;
+    border-style: solid;
+    pointer-events: none;
+  }
+  
+  &::before {
+    top: 0;
+    left: 0;
+    border-width: $thickness 0 0 $thickness;
+  }
+  
+  &::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 $thickness $thickness 0;
+  }
+}
+
+// Data grid pattern
+@mixin bat-grid-pattern {
+  background-image:
+    linear-gradient(rgba($bat-gray-500, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($bat-gray-500, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+// Glow effect
+@mixin bat-glow($color: $bat-red, $intensity: 0.4) {
+  box-shadow: 0 0 10px rgba($color, $intensity);
+}
+
+// Text glow
+@mixin bat-text-glow($color: $bat-red) {
+  text-shadow: 0 0 8px $color, 0 0 12px rgba($color, 0.5);
+}
+
+// ========================================================
+// SECTION 5: BASE STYLES
+// ========================================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.bat-theme {
+  font-family: $bat-font-data;
+  font-size: 12px;
+  line-height: 1.4;
+  color: $bat-text-primary;
+  background: $bat-void;
+  min-height: 100vh;
+  
+  // Optional scanlines
+  &.bat-scanlines::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    @include bat-scanlines;
+    opacity: 0.3;
+  }
+  
+  // Optional grid
+  &.bat-grid {
+    @include bat-grid-pattern;
+  }
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bat-black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $bat-gray-500;
+  
+  &:hover {
+    background: $bat-gray-400;
+  }
+}
+
+::selection {
+  background: $bat-red;
+  color: $bat-white;
+}
+
+// ========================================================
+// SECTION 6: BATCOMPUTER HEADER BAR
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_HEADER]
+    FUNCTION: Batcomputer Header Bar
+-----------------------------------------------------------
+    UniqueID: 793001
+=========================================================== */
+
+.bat-header {
+  background: $bat-black;
+  border-bottom: 1px solid $bat-border;
+  padding: $bat-space-2 $bat-space-4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include bat-red-accent;
+}
+
+.bat-logo {
+  display: flex;
+  align-items: center;
+  gap: $bat-space-3;
+  
+  .bat-icon {
+    width: 32px;
+    height: 20px;
+    fill: $bat-red;
+  }
+  
+  .bat-title {
+    font-family: $bat-font-display;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: $bat-gray-300;
+    text-transform: uppercase;
+  }
+}
+
+.bat-case-id {
+  display: flex;
+  align-items: center;
+  gap: $bat-space-4;
+  
+  .case-number {
+    font-family: $bat-font-display;
+    font-size: 14px;
+    font-weight: 800;
+    color: $bat-red;
+    letter-spacing: 0.1em;
+  }
+  
+  .case-title {
+    font-family: $bat-font-display;
+    font-size: 18px;
+    font-weight: 700;
+    color: $bat-white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  
+  .case-path {
+    font-family: $bat-font-mono;
+    font-size: 10px;
+    color: $bat-gray-400;
+  }
+}
+
+// ========================================================
+// SECTION 7: BATCOMPUTER PANELS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_PANELS]
+    FUNCTION: Batcomputer Panel Components
+-----------------------------------------------------------
+    UniqueID: 793002
+=========================================================== */
+
+.bat-panel {
+  background: $bat-panel;
+  border: 1px solid $bat-border;
+  position: relative;
+  overflow: hidden;
+}
+
+.bat-panel-header {
+  background: $bat-black;
+  border-bottom: 1px solid $bat-border;
+  padding: $bat-space-2 $bat-space-3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  .panel-title {
+    font-family: $bat-font-display;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $bat-text-primary;
+  }
+  
+  .panel-status {
+    font-family: $bat-font-mono;
+    font-size: 10px;
+    color: $bat-gray-400;
+  }
+}
+
+.bat-panel-body {
+  padding: $bat-space-3;
+}
+
+// Red accent panel (alert/important)
+.bat-panel-red {
+  @extend .bat-panel;
+  border-color: $bat-red-dim;
+  @include bat-red-accent;
+  
+  .bat-panel-header {
+    background: $bat-red-bg;
+    border-bottom-color: $bat-red-dim;
+    
+    .panel-title {
+      color: $bat-red-bright;
+    }
+  }
+}
+
+// ========================================================
+// SECTION 8: LARGE TIMER DISPLAY
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_TIMER]
+    FUNCTION: Large Timer/Counter Display
+-----------------------------------------------------------
+    UniqueID: 793003
+=========================================================== */
+
+.bat-timer {
+  font-family: $bat-font-data;
+  font-size: 72px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: $bat-white;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  
+  &.bat-timer-red {
+    color: $bat-red-bright;
+    @include bat-text-glow($bat-red);
+  }
+}
+
+.bat-timer-label {
+  font-family: $bat-font-display;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $bat-gray-400;
+  margin-top: $bat-space-2;
+}
+
+// ========================================================
+// SECTION 9: DATA TABLES & HEX DISPLAY
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_DATA]
+    FUNCTION: Data Display Components
+-----------------------------------------------------------
+    UniqueID: 793004
+=========================================================== */
+
+.bat-data-table {
+  width: 100%;
+  font-family: $bat-font-mono;
+  font-size: 11px;
+  border-collapse: collapse;
+  
+  th {
+    text-align: left;
+    padding: $bat-space-1 $bat-space-2;
+    font-weight: 500;
+    color: $bat-gray-400;
+    border-bottom: 1px solid $bat-border;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  td {
+    padding: $bat-space-1 $bat-space-2;
+    color: $bat-text-data;
+    border-bottom: 1px solid $bat-gray-600;
+    
+    &.highlight {
+      color: $bat-white;
+    }
+    
+    &.red {
+      color: $bat-red-bright;
+    }
+    
+    &.green {
+      color: $bat-online;
+    }
+  }
+  
+  tr:hover {
+    background: rgba($bat-white, 0.02);
+  }
+}
+
+// Hex data display
+.bat-hex-display {
+  font-family: $bat-font-mono;
+  font-size: 11px;
+  color: $bat-text-data;
+  line-height: 1.6;
+  
+  .hex-address {
+    color: $bat-gray-400;
+    margin-right: $bat-space-3;
+  }
+  
+  .hex-data {
+    color: $bat-gray-200;
+    letter-spacing: 0.1em;
+  }
+  
+  .hex-highlight {
+    color: $bat-white;
+    background: rgba($bat-white, 0.1);
+    padding: 0 2px;
+  }
+}
+
+// Packet headers display
+.bat-packet-display {
+  font-family: $bat-font-mono;
+  font-size: 10px;
+  color: $bat-text-data;
+  line-height: 1.8;
+  
+  .packet-line {
+    display: flex;
+    gap: $bat-space-2;
+    
+    &:hover {
+      background: rgba($bat-white, 0.02);
+    }
+  }
+  
+  .packet-id {
+    color: $bat-gray-400;
+    min-width: 100px;
+  }
+  
+  .packet-data {
+    color: $bat-gray-200;
+    flex: 1;
+  }
+  
+  .packet-status {
+    color: $bat-gray-400;
+    min-width: 120px;
+    text-align: right;
+  }
+}
+
+// ========================================================
+// SECTION 10: PROGRESS BARS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_PROGRESS]
+    FUNCTION: Progress Bar Components
+-----------------------------------------------------------
+    UniqueID: 793005
+=========================================================== */
+
+.bat-progress {
+  height: 16px;
+  background: $bat-black;
+  border: 1px solid $bat-border;
+  position: relative;
+  overflow: hidden;
+}
+
+.bat-progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    $bat-gray-300 0px,
+    $bat-gray-300 8px,
+    $bat-gray-500 8px,
+    $bat-gray-500 10px
+  );
+  transition: width 0.3s ease;
+}
+
+.bat-progress-red {
+  .bat-progress-fill {
+    background: repeating-linear-gradient(
+      90deg,
+      $bat-red 0px,
+      $bat-red 8px,
+      $bat-red-dim 8px,
+      $bat-red-dim 10px
+    );
+  }
+}
+
+// Percentage display
+.bat-percentage {
+  font-family: $bat-font-data;
+  font-size: 32px;
+  font-weight: 400;
+  color: $bat-white;
+  
+  .percent-symbol {
+    font-size: 18px;
+    color: $bat-gray-400;
+  }
+}
+
+// ========================================================
+// SECTION 11: STATUS INDICATORS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_STATUS]
+    FUNCTION: Status Indicator Components
+-----------------------------------------------------------
+    UniqueID: 793006
+=========================================================== */
+
+.bat-status {
+  display: inline-flex;
+  align-items: center;
+  gap: $bat-space-2;
+  font-family: $bat-font-mono;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+  }
+  
+  &.online {
+    color: $bat-online;
+    &::before { animation: bat-pulse 2s ease-in-out infinite; }
+  }
+  
+  &.offline {
+    color: $bat-gray-500;
+  }
+  
+  &.alert {
+    color: $bat-red-bright;
+    &::before { animation: bat-pulse-fast 0.5s ease-in-out infinite; }
+  }
+  
+  &.warning {
+    color: $bat-warning;
+  }
+  
+  &.encrypted {
+    color: $bat-encrypted;
+  }
+}
+
+// ========================================================
+// SECTION 12: LOG DISPLAY
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_LOG]
+    FUNCTION: Transfer/Activity Log Display
+-----------------------------------------------------------
+    UniqueID: 793007
+=========================================================== */
+
+.bat-log {
+  font-family: $bat-font-mono;
+  font-size: 10px;
+  color: $bat-text-data;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.bat-log-entry {
+  display: flex;
+  gap: $bat-space-3;
+  padding: $bat-space-1 0;
+  border-bottom: 1px solid $bat-gray-600;
+  
+  &:hover {
+    background: rgba($bat-white, 0.02);
+  }
+  
+  .log-ip {
+    color: $bat-gray-300;
+    min-width: 110px;
+  }
+  
+  .log-action {
+    color: $bat-gray-400;
+    min-width: 80px;
+  }
+  
+  .log-details {
+    color: $bat-text-data;
+    flex: 1;
+  }
+  
+  .log-status {
+    color: $bat-online;
+    
+    &.error {
+      color: $bat-red-bright;
+    }
+  }
+}
+
+// ========================================================
+// SECTION 13: NETWORK/CONNECTION DISPLAY
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_NETWORK]
+    FUNCTION: Network Connection Display
+-----------------------------------------------------------
+    UniqueID: 793008
+=========================================================== */
+
+.bat-network-list {
+  font-family: $bat-font-mono;
+  font-size: 10px;
+}
+
+.bat-network-item {
+  display: flex;
+  align-items: center;
+  gap: $bat-space-2;
+  padding: $bat-space-1 0;
+  color: $bat-text-data;
+  
+  .network-ip {
+    color: $bat-gray-300;
+    min-width: 100px;
+  }
+  
+  .network-type {
+    color: $bat-gray-400;
+    min-width: 80px;
+  }
+  
+  .network-id {
+    color: $bat-text-data;
+    flex: 1;
+  }
+}
+
+// Server connection box
+.bat-server-box {
+  background: $bat-black;
+  border: 1px solid $bat-border;
+  padding: $bat-space-3;
+  text-align: center;
+  
+  .server-label {
+    font-family: $bat-font-mono;
+    font-size: 10px;
+    color: $bat-gray-400;
+    text-transform: uppercase;
+    margin-bottom: $bat-space-1;
+  }
+  
+  .server-address {
+    font-family: $bat-font-data;
+    font-size: 14px;
+    font-weight: 500;
+    color: $bat-white;
+  }
+  
+  &.active {
+    border-color: $bat-online-dim;
+    
+    .server-address {
+      color: $bat-online;
+    }
+  }
+}
+
+// ========================================================
+// SECTION 14: SIDEBAR LABELS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_SIDEBAR]
+    FUNCTION: Sidebar Label Components
+-----------------------------------------------------------
+    UniqueID: 793009
+=========================================================== */
+
+.bat-sidebar-label {
+  font-family: $bat-font-display;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $bat-gray-400;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.bat-section-label {
+  font-family: $bat-font-display;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bat-gray-400;
+  padding: $bat-space-1 $bat-space-2;
+  background: $bat-black;
+  border: 1px solid $bat-border;
+  display: inline-block;
+}
+
+// ========================================================
+// SECTION 15: MINI CHARTS/GRAPHS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_CHARTS]
+    FUNCTION: Mini Chart Components
+-----------------------------------------------------------
+    UniqueID: 793010
+=========================================================== */
+
+.bat-mini-chart {
+  height: 40px;
+  background: $bat-black;
+  border: 1px solid $bat-border;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: $bat-space-1;
+}
+
+.bat-chart-bar {
+  flex: 1;
+  background: $bat-gray-500;
+  min-height: 2px;
+  
+  &.active {
+    background: $bat-gray-300;
+  }
+  
+  &.highlight {
+    background: $bat-white;
+  }
+}
+
+// Waveform display
+.bat-waveform {
+  height: 30px;
+  background: $bat-black;
+  border: 1px solid $bat-border;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $bat-gray-600;
+  }
+}
+
+// ========================================================
+// SECTION 16: BUTTONS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_BUTTONS]
+    FUNCTION: Button Components
+-----------------------------------------------------------
+    UniqueID: 793011
+=========================================================== */
+
+.bat-btn {
+  font-family: $bat-font-display;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: $bat-space-2 $bat-space-4;
+  background: $bat-panel;
+  border: 1px solid $bat-border;
+  color: $bat-text-primary;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  
+  &:hover {
+    background: $bat-elevated;
+    border-color: $bat-gray-400;
+  }
+  
+  &:active {
+    background: $bat-surface;
+  }
+}
+
+.bat-btn-red {
+  background: $bat-red-dark;
+  border-color: $bat-red;
+  color: $bat-white;
+  
+  &:hover {
+    background: $bat-red-dim;
+    border-color: $bat-red-bright;
+    @include bat-glow($bat-red, 0.3);
+  }
+}
+
+// ========================================================
+// SECTION 17: GRID LAYOUT
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_GRID]
+    FUNCTION: Grid Layout System
+-----------------------------------------------------------
+    UniqueID: 793012
+=========================================================== */
+
+.bat-grid {
+  display: grid;
+  gap: $bat-space-2;
+  
+  &.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  &.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &.cols-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.bat-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr 300px;
+  grid-template-rows: auto 1fr auto;
+  gap: $bat-space-2;
+  min-height: 100vh;
+  padding: $bat-space-2;
+}
+
+// ========================================================
+// SECTION 18: TYPOGRAPHY UTILITIES
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_TYPOGRAPHY]
+    FUNCTION: Typography Utilities
+-----------------------------------------------------------
+    UniqueID: 793013
+=========================================================== */
+
+.bat-heading {
+  font-family: $bat-font-display;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bat-text-primary;
+}
+
+.bat-label {
+  font-family: $bat-font-display;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bat-gray-400;
+}
+
+.bat-mono {
+  font-family: $bat-font-mono;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+.bat-data {
+  font-family: $bat-font-data;
+  font-size: 11px;
+  color: $bat-text-data;
+}
+
+.bat-red-text {
+  color: $bat-red-bright;
+}
+
+.bat-glow-text {
+  @include bat-text-glow($bat-red);
+}
+
+// ========================================================
+// SECTION 19: ANIMATIONS
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [BAT_ANIMATIONS]
+    FUNCTION: Keyframe Animations
+-----------------------------------------------------------
+    UniqueID: 793014
+=========================================================== */
+
+@keyframes bat-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes bat-pulse-fast {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes bat-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes bat-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.bat-blink {
+  animation: bat-blink 1s step-end infinite;
+}
+
+.bat-pulse {
+  animation: bat-pulse 2s ease-in-out infinite;
+}
+
+// ========================================================
+// SECTION 20: ACCESSIBILITY
+// ========================================================
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid $bat-red;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}

@@ -1,0 +1,565 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.tactical-theme {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #e8f4f8;
+  background: #080d10;
+  min-height: 100vh;
+  position: relative;
+}
+body.tactical-theme.tactical-grid::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: linear-gradient(rgba(0, 204, 204, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 204, 204, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a1115;
+  border: 1px solid #1a3d4a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #009999;
+  border: 1px solid #00cccc;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00cccc;
+}
+
+::-moz-selection {
+  background: rgba(0, 204, 204, 0.3);
+  color: #e8f4f8;
+}
+
+::selection {
+  background: rgba(0, 204, 204, 0.3);
+  color: #e8f4f8;
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_PANELS]
+    FUNCTION: Tactical Panel Components
+-----------------------------------------------------------
+    UniqueID: 791001
+=========================================================== */
+.tactical-panel, .tactical-panel-alert {
+  background: #0f1a1f;
+  border: 1px solid #2a5d6a;
+  position: relative;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 204, 204, 0.05) 10px, rgba(0, 204, 204, 0.05) 20px);
+  position: relative;
+  overflow: hidden;
+}
+.tactical-panel::before, .tactical-panel-alert::before, .tactical-panel::after, .tactical-panel-alert::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: #00cccc;
+  border-style: solid;
+  pointer-events: none;
+}
+.tactical-panel::before, .tactical-panel-alert::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.tactical-panel::after, .tactical-panel-alert::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+.tactical-panel-header {
+  background: #0a1419;
+  border-bottom: 1px solid #009999;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.tactical-panel-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #00cccc 50%, transparent 100%);
+}
+.tactical-panel-header .panel-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #e8f4f8;
+}
+.tactical-panel-header .panel-id {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #4a5d6a;
+}
+
+.tactical-panel-body {
+  padding: 16px;
+}
+
+.tactical-panel-alert {
+  border-color: #ff1a3d;
+  position: relative;
+  background: linear-gradient(135deg, #0f1a1f 0%, rgba(255, 26, 61, 0.05) 100%);
+}
+.tactical-panel-alert::before, .tactical-panel-alert::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: #ff1a3d;
+  border-style: solid;
+  pointer-events: none;
+}
+.tactical-panel-alert::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.tactical-panel-alert::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+.tactical-panel-alert .tactical-panel-header {
+  border-bottom-color: #ff1a3d;
+  position: relative;
+}
+.tactical-panel-alert .tactical-panel-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #ff1a3d 50%, transparent 100%);
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_DATA]
+    FUNCTION: Data Display Components
+-----------------------------------------------------------
+    UniqueID: 791002
+=========================================================== */
+.tactical-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a3d4a;
+}
+.tactical-data-row:last-child {
+  border-bottom: none;
+}
+
+.tactical-data-label {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8fa4b0;
+}
+
+.tactical-data-value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: #00ffcc;
+  font-variant-numeric: tabular-nums;
+}
+
+.tactical-display {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #00ffcc;
+  text-shadow: 0 0 8px #00cccc, 0 0 12px rgba(0, 204, 204, 0.5);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.tactical-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tactical-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.tactical-status.online {
+  color: #00ff99;
+}
+.tactical-status.online::before {
+  animation: tactical-pulse 2s ease-in-out infinite;
+}
+.tactical-status.alert {
+  color: #ff1a3d;
+}
+.tactical-status.alert::before {
+  animation: tactical-pulse-fast 1s ease-in-out infinite;
+}
+.tactical-status.warning {
+  color: #ffaa00;
+}
+.tactical-status.offline {
+  color: #666677;
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_PROGRESS]
+    FUNCTION: Progress Bars and Meters
+-----------------------------------------------------------
+    UniqueID: 791003
+=========================================================== */
+.tactical-progress {
+  height: 20px;
+  background: #0a1115;
+  border: 1px solid #2a5d6a;
+  position: relative;
+  overflow: hidden;
+}
+.tactical-progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 204, 204, 0.1) 10px, rgba(0, 204, 204, 0.1) 20px);
+}
+
+.tactical-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #006666 0%, #00cccc 50%, #00ffcc 100%);
+  position: relative;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 204, 204, 0.3);
+}
+.tactical-progress-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  animation: tactical-shimmer 2s linear infinite;
+}
+
+.tactical-progress-segments {
+  display: flex;
+  gap: 2px;
+  height: 16px;
+}
+
+.tactical-segment {
+  flex: 1;
+  background: #0a1115;
+  border: 1px solid #1a3d4a;
+}
+.tactical-segment.filled {
+  background: #00cccc;
+  border-color: #00ffcc;
+  box-shadow: 0 0 10px rgba(0, 204, 204, 0.2);
+}
+.tactical-segment.alert {
+  background: #ff1a3d;
+  border-color: #ff3355;
+  box-shadow: 0 0 10px rgba(255, 26, 61, 0.3);
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_BUTTONS]
+    FUNCTION: Button Components
+-----------------------------------------------------------
+    UniqueID: 791004
+=========================================================== */
+.tactical-btn {
+  font-family: "Orbitron", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  background: #152228;
+  border: 1px solid #009999;
+  color: #e8f4f8;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.tactical-btn:hover {
+  background: #0f1a1f;
+  border-color: #00cccc;
+  color: #00ffcc;
+  box-shadow: 0 0 10px rgba(0, 204, 204, 0.2);
+}
+.tactical-btn:active {
+  background: #006666;
+}
+
+.tactical-btn-primary {
+  background: linear-gradient(135deg, #006666 0%, #00cccc 100%);
+  border-color: #00ffcc;
+  color: #0a1115;
+}
+.tactical-btn-primary:hover {
+  background: linear-gradient(135deg, #00cccc 0%, #00ffcc 100%);
+  box-shadow: 0 0 10px rgba(0, 204, 204, 0.4);
+}
+
+.tactical-btn-alert {
+  background: linear-gradient(135deg, #cc1533 0%, #ff1a3d 100%);
+  border-color: #ff3355;
+  color: #e8f4f8;
+}
+.tactical-btn-alert:hover {
+  background: linear-gradient(135deg, #ff1a3d 0%, #ff3355 100%);
+  box-shadow: 0 0 10px rgba(255, 26, 61, 0.4);
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_TABLES]
+    FUNCTION: Data Table Components
+-----------------------------------------------------------
+    UniqueID: 791005
+=========================================================== */
+.tactical-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.tactical-table thead {
+  background: #0a1419;
+}
+.tactical-table thead th {
+  padding: 8px 12px;
+  text-align: left;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8fa4b0;
+  border-bottom: 1px solid #009999;
+}
+.tactical-table tbody tr {
+  border-bottom: 1px solid #1a3d4a;
+  transition: background 0.15s ease;
+}
+.tactical-table tbody tr:hover {
+  background: rgba(0, 204, 204, 0.05);
+}
+.tactical-table tbody tr.alert {
+  background: rgba(255, 26, 61, 0.12);
+  color: #ff3355;
+}
+.tactical-table tbody td {
+  padding: 8px 12px;
+  color: #e8f4f8;
+}
+.tactical-table tbody td.online {
+  color: #00ff99;
+}
+.tactical-table tbody td.alert {
+  color: #ff1a3d;
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_BADGES]
+    FUNCTION: Badge and Tag Components
+-----------------------------------------------------------
+    UniqueID: 791006
+=========================================================== */
+.tactical-badge {
+  display: inline-block;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background: rgba(0, 204, 204, 0.15);
+  border: 1px solid #009999;
+  color: #00ffcc;
+}
+.tactical-badge.alert {
+  background: rgba(255, 26, 61, 0.12);
+  border-color: #cc1533;
+  color: #ff3355;
+}
+.tactical-badge.success {
+  background: rgba(0, 255, 153, 0.15);
+  border-color: #00cc77;
+  color: #00ff99;
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_ANIMATIONS]
+    FUNCTION: Keyframe Animations
+-----------------------------------------------------------
+    UniqueID: 791007
+=========================================================== */
+@keyframes tactical-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes tactical-pulse-fast {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+@keyframes tactical-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+@keyframes tactical-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+@keyframes tactical-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+.tactical-scanning {
+  position: relative;
+  overflow: hidden;
+}
+.tactical-scanning::after {
+  content: "";
+  position: absolute;
+  inset: 0 -100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 204, 204, 0.2) 50%, transparent 100%);
+  animation: tactical-shimmer 2s linear infinite;
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_TYPOGRAPHY]
+    FUNCTION: Typography Utilities
+-----------------------------------------------------------
+    UniqueID: 791008
+=========================================================== */
+.tactical-heading {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #e8f4f8;
+}
+
+.tactical-label {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8fa4b0;
+}
+
+.tactical-mono {
+  font-family: "JetBrains Mono", monospace;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+.tactical-glow-text {
+  text-shadow: 0 0 8px #00cccc, 0 0 12px rgba(0, 204, 204, 0.5);
+}
+
+.tactical-alert-text {
+  color: #ff3355;
+  text-shadow: 0 0 8px #ff1a3d, 0 0 12px rgba(255, 26, 61, 0.5);
+}
+
+/* ========================================================
+    //ANCHOR [TACTICAL_GRID]
+    FUNCTION: Grid Layout System
+-----------------------------------------------------------
+    UniqueID: 791009
+=========================================================== */
+.tactical-grid {
+  display: grid;
+  gap: 16px;
+}
+.tactical-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.tactical-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.tactical-grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+:focus-visible {
+  outline: 2px solid #00cccc;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}/*# sourceMappingURL=style-tactical.css.map */

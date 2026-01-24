@@ -1,0 +1,244 @@
+{
+    "php_utilities": {
+        "util_php": {
+            "id": "util_php",
+            "file_path": "includes/util.php",
+            "language": "PHP",
+            "type": "utility_library",
+            "description": "Global PHP utility functions for the website",
+            "functions": {
+                "generateUniqueID": {
+                    "name": "generateUniqueID",
+                    "unique_id": 123459,
+                    "anchor": "GENERATE_UNIQUE_ID",
+                    "description": "Generates and returns a unique 6-digit integer ID, tracking all generated IDs in a static array to avoid duplicates within a single request",
+                    "parameters": [],
+                    "returns": {
+                        "type": "int",
+                        "description": "6-digit unique integer between 100000 and 999999"
+                    },
+                    "usage": "Used throughout the application to assign unique identifiers to components, sections, and elements",
+                    "implementation": "Uses rand() with static array tracking for duplicate prevention",
+                    "status": "active"
+                }
+            },
+            "dependencies": [],
+            "used_by": ["header.php", "footer.php", "index.php", "ui-demo.php"],
+            "status": "active",
+            "last_modified": "2026-01-15"
+        }
+    },
+    "javascript_utilities": {
+        "canvas_js": {
+            "id": "canvas_js",
+            "file_path": "js/canvas.js",
+            "unique_id": 123465,
+            "language": "JavaScript",
+            "type": "visual_utility",
+            "anchor": "CANVAS_PARTICLE_SYSTEM",
+            "description": "Three-layer interactive particle system with cross-shaped particles for dynamic canvas backgrounds",
+            "features": {
+                "particle_system": {
+                    "layers": 3,
+                    "particle_shape": "cross",
+                    "interaction": "mouse_hover",
+                    "animation": "continuous"
+                },
+                "configuration": {
+                    "canvas_id": "headerCanvas",
+                    "size": "viewport_responsive",
+                    "mouse_enabled": true,
+                    "color_system": "RGB with alpha layers",
+                    "customizable": true
+                },
+                "performance": {
+                    "render_loop": "requestAnimationFrame",
+                    "optimization": "layer_based_rendering"
+                }
+            },
+            "configuration_options": [
+                "canvasId",
+                "size (width/height functions)",
+                "mouse.enabled",
+                "color (base RGB, alpha settings)",
+                "particles.layers",
+                "particles.spacing",
+                "mouse.radius"
+            ],
+            "used_by": ["index.php"],
+            "dependencies": [],
+            "status": "active",
+            "file_size": "15269 bytes",
+            "last_modified": "2026-01-15"
+        },
+        "util_js": {
+            "id": "util_js",
+            "file_path": "js/util.js",
+            "unique_id": 123464,
+            "language": "JavaScript",
+            "type": "utility_library",
+            "anchor": "EMPTY_FILE",
+            "description": "Placeholder for future JavaScript utility functions",
+            "functions": {},
+            "status": "placeholder",
+            "file_size": "392 bytes",
+            "last_modified": "2026-01-15"
+        },
+        "ui_js": {
+            "id": "ui_js",
+            "file_path": "js/ui.js",
+            "unique_id": 123463,
+            "language": "JavaScript",
+            "type": "ui_utility",
+            "anchor": "EMPTY_FILE",
+            "description": "Placeholder for future UI-related JavaScript logic",
+            "functions": {},
+            "status": "placeholder",
+            "file_size": "391 bytes",
+            "last_modified": "2026-01-15"
+        },
+        "main_js": {
+            "id": "main_js",
+            "file_path": "js/main.js",
+            "unique_id": 123462,
+            "language": "JavaScript",
+            "type": "application_logic",
+            "anchor": "EMPTY_FILE",
+            "description": "Placeholder for future main application logic",
+            "functions": {},
+            "status": "placeholder",
+            "file_size": "397 bytes",
+            "last_modified": "2026-01-15"
+        },
+        "event_js": {
+            "id": "event_js",
+            "file_path": "js/event.js",
+            "unique_id": 123461,
+            "language": "JavaScript",
+            "type": "event_handling",
+            "anchor": "EMPTY_FILE",
+            "description": "Placeholder for future event handling logic",
+            "functions": {},
+            "status": "placeholder",
+            "file_size": "395 bytes",
+            "last_modified": "2026-01-15"
+        },
+        "articles_js": {
+            "id": "articles_js",
+            "file_path": "js/articles.js",
+            "language": "JavaScript",
+            "type": "content_utility",
+            "description": "Placeholder for article-related JavaScript functionality",
+            "functions": {},
+            "status": "placeholder",
+            "file_size": "0 bytes",
+            "last_modified": "2026-01-15"
+        },
+        "scifi_menu_interactions": {
+            "id": "scifi_menu_interactions",
+            "file_path": "ui-demo.php (inline script)",
+            "unique_id": 789004,
+            "language": "JavaScript",
+            "type": "ui_interaction",
+            "anchor": "SCIFI_MENU_INTERACTIONS",
+            "description": "Interactive click handlers for sci-fi menu items with keyboard navigation and haptic feedback",
+            "features": {
+                "click_selection": "Single-select menu items with active state management",
+                "keyboard_navigation": "Arrow keys (up/down) and Enter/Space for selection",
+                "haptic_feedback": "Mobile vibration on interaction",
+                "hover_effects": "Optional sound effects on hover",
+                "accessibility": "Keyboard-first navigation support"
+            },
+            "event_handlers": [
+                "click (menu item selection)",
+                "mouseenter (hover effects)",
+                "keydown (keyboard navigation)"
+            ],
+            "used_by": ["ui-demo.php"],
+            "status": "active",
+            "last_modified": "2026-01-15"
+        }
+    },
+    "php_includes": {
+        "header_php": {
+            "id": "header_php",
+            "file_path": "includes/header.php",
+            "unique_id": 123458,
+            "language": "PHP",
+            "type": "template_component",
+            "anchor": "PAGE_HEADER",
+            "description": "Global header component with HTML doctype, head section, and opening body tag",
+            "includes": ["util.php"],
+            "outputs": [
+                "DOCTYPE declaration",
+                "HTML head with meta tags",
+                "Page title (dynamic via $page_title)",
+                "Bootstrap CSS",
+                "Custom stylesheets",
+                "jQuery and Bootstrap JS"
+            ],
+            "dependencies": {
+                "external": [
+                    "Bootstrap 4.5.2 CSS",
+                    "jQuery 3.5.1",
+                    "Popper.js 2.9.2",
+                    "Bootstrap 4.5.2 JS"
+                ],
+                "internal": ["style-main.css"]
+            },
+            "variables": {
+                "$page_title": "Required variable for page title",
+                "$include_file": "Object with uniqueID, name, and path"
+            },
+            "used_by": ["index.php", "blog.php", "contact.php", "ui-demo.php", "article_0a01.php"],
+            "status": "active",
+            "last_modified": "2026-01-15"
+        },
+        "footer_php": {
+            "id": "footer_php",
+            "file_path": "includes/footer.php",
+            "unique_id": 123457,
+            "language": "PHP",
+            "type": "template_component",
+            "anchor": "PAGE_FOOTER",
+            "description": "Global footer component with copyright information and closing HTML tags",
+            "outputs": [
+                "Footer element with copyright",
+                "Closing body tag",
+                "Closing html tag"
+            ],
+            "content": {
+                "copyright": "© 2026 ZCOM Studios LLC. All rights reserved."
+            },
+            "used_by": ["index.php", "blog.php", "contact.php", "ui-demo.php", "article_0a01.php"],
+            "status": "active",
+            "last_modified": "2026-01-15"
+        },
+        "navbar_php": {
+            "id": "navbar_php",
+            "file_path": "includes/navbar.php",
+            "language": "PHP",
+            "type": "template_component",
+            "description": "Global navigation bar component",
+            "used_by": ["index.php", "blog.php", "contact.php", "ui-demo.php"],
+            "status": "active",
+            "last_modified": "2026-01-15"
+        }
+    },
+    "utility_template": {
+        "id": "",
+        "file_path": "",
+        "unique_id": null,
+        "language": "PHP|JavaScript|Python|etc",
+        "type": "utility_library|visual_utility|ui_interaction|template_component",
+        "anchor": "",
+        "description": "",
+        "functions": {},
+        "features": {},
+        "dependencies": [],
+        "used_by": [],
+        "status": "active|placeholder|deprecated",
+        "file_size": "",
+        "last_modified": ""
+    }
+}

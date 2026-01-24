@@ -1,0 +1,306 @@
+{
+    "article_0a01": {
+        "id": "article_0a01",
+        "title": "The Developer-AI Handshake: Why the Best Engineers in 2026 Will Be Collaborators, Not Coders",
+        "slug": "developer-ai-handshake-2026",
+        "author": {
+            "name": "Developer",
+            "role": "Software Engineer & Writer"
+        },
+        "published_date": "2026-01-15",
+        "modified_date": "2026-01-15",
+        "status": "published",
+        "category": "Technology",
+        "tags": [
+            "AI",
+            "Software Development",
+            "Coding Tools",
+            "Developer Productivity",
+            "Machine Learning",
+            "Future of Work",
+            "Programming",
+            "Tech Trends"
+        ],
+        "excerpt": "While AI tool adoption soars, developer trust is plummeting. The paradox reveals a new truth about what it takes to thrive in software development.",
+        "featured_image": null,
+        "word_count": 2847,
+        "reading_time": 11,
+        "seo": {
+            "meta_title": "The Developer-AI Handshake: Best Engineers in 2026 | Tech Blog",
+            "meta_description": "Discover why 65% of developers use AI tools but trust is declining. Learn the skills that matter for thriving with AI-assisted development in 2026.",
+            "keywords": [
+                "AI coding tools",
+                "developer productivity",
+                "GitHub Copilot",
+                "Claude Code",
+                "prompt engineering",
+                "AI-assisted development",
+                "software engineering 2026"
+            ],
+            "og_title": "The Developer-AI Handshake: Why the Best Engineers in 2026 Will Be Collaborators, Not Coders",
+            "og_description": "While AI tool adoption soars, developer trust is plummeting. The paradox reveals a new truth about what it takes to thrive in software development.",
+            "og_image": null,
+            "twitter_card": "summary_large_image"
+        },
+        "statistics": {
+            "views": 0,
+            "shares": 0,
+            "comments": 0,
+            "likes": 0
+        },
+        "content_structure": {
+            "sections": [
+                "Introduction",
+                "From Autocomplete to Autonomous: A Three-Year Revolution",
+                "The 'Almost Right' Problem",
+                "The New Developer Identity: Architect and Auditor",
+                "The Parallel Agent Lifestyle",
+                "What AI Can't Do (Yet)",
+                "The Skills That Matter Now",
+                "The Uncomfortable Question",
+                "Looking Forward"
+            ],
+            "has_code_examples": true,
+            "has_statistics": true,
+            "has_cta": true
+        },
+        "key_statistics": [
+            {
+                "value": "65%",
+                "description": "Developers use AI coding tools weekly"
+            },
+            {
+                "value": "41%",
+                "description": "All code is AI-generated or AI-assisted"
+            },
+            {
+                "value": "60%",
+                "description": "Positive sentiment toward AI tools (down from 70%)"
+            },
+            {
+                "value": "46%",
+                "description": "Developers distrust AI accuracy"
+            },
+            {
+                "value": "66%",
+                "description": "Frustrated with 'almost right' AI solutions"
+            },
+            {
+                "value": "90%",
+                "description": "Claude Code written by Claude Code at Anthropic"
+            },
+            {
+                "value": "76%",
+                "description": "Don't plan to use AI for deployment/monitoring"
+            },
+            {
+                "value": "20%",
+                "description": "Drop in employment for developers aged 22-25 (2022-2025)"
+            }
+        ],
+        "references": [
+            "Stack Overflow 2025 Developer Survey",
+            "Anthropic Claude Code",
+            "Stanford employment study",
+            "Simon Willison (parallel coding agent lifestyle)"
+        ],
+        "related_articles": [],
+        "file_path": "articles/article_0a01.php",
+        "template": "blog-article",
+        "comments_enabled": true,
+        "featured": true,
+        "sticky": false,
+        "visibility": "public",
+        "language": "en",
+        "schema_version": "1.0"
+    },
+    "article_0a02": {
+        "id": "article_0a02",
+        "title": "The Loot Filter Method: Control Your Inbox Like a Pro",
+        "slug": "loot-filter-inbox-method",
+        "author": {
+            "name": "Developer",
+            "role": "Software Engineer & Writer"
+        },
+        "published_date": "2026-01-02",
+        "modified_date": "2026-01-02",
+        "status": "published",
+        "category": "Productivity",
+        "tags": [
+            "Productivity",
+            "Email Management",
+            "Gaming",
+            "Workflow",
+            "Time Management"
+        ],
+        "excerpt": "Inbox overload is a design problem. Treating email as an urgent real-time stream trains you to react rather than focus. Apply the gamer's loot filter approach to email.",
+        "featured_image": null,
+        "word_count": 850,
+        "reading_time": 4,
+        "seo": {
+            "meta_title": "The Loot Filter Method for Email Management | Productivity",
+            "meta_description": "Learn how to apply gaming loot filter concepts to manage your inbox effectively and reduce email overload.",
+            "keywords": [
+                "email management",
+                "productivity hacks",
+                "inbox zero",
+                "loot filter",
+                "email automation"
+            ],
+            "og_title": "The Loot Filter Method: Control Your Inbox Like a Pro",
+            "og_description": "Inbox overload is a design problem. Apply the gamer's loot filter approach to email.",
+            "og_image": null,
+            "twitter_card": "summary"
+        },
+        "statistics": {
+            "views": 0,
+            "shares": 0,
+            "comments": 0,
+            "likes": 0
+        },
+        "content_structure": {
+            "sections": [
+                "Introduction",
+                "How to build a loot filter",
+                "Example rule set"
+            ],
+            "has_code_examples": true,
+            "has_statistics": false,
+            "has_cta": false
+        },
+        "related_articles": [],
+        "file_path": "articles/article_0a01.php",
+        "template": "blog-article",
+        "comments_enabled": true,
+        "featured": false,
+        "sticky": false,
+        "visibility": "public",
+        "language": "en",
+        "schema_version": "1.0"
+    },
+    "article_0a03": {
+        "id": "article_0a03",
+        "title": "Graphic Design Is Code: Build Interfaces as Reusable Systems",
+        "slug": "graphic-design-is-code",
+        "author": {
+            "name": "Developer",
+            "role": "Software Engineer & Writer"
+        },
+        "published_date": "2025-12-28",
+        "modified_date": "2025-12-28",
+        "status": "published",
+        "category": "Design & Engineering",
+        "tags": [
+            "Design Systems",
+            "UI/UX",
+            "Component Architecture",
+            "Figma",
+            "React"
+        ],
+        "excerpt": "Whether your components live in Figma or React, treating UI as a system speeds delivery and reduces rework. Components are contracts—clear inputs and predictable outputs.",
+        "featured_image": null,
+        "word_count": 920,
+        "reading_time": 4,
+        "seo": {
+            "meta_title": "Graphic Design Is Code: Component-Based UI Systems",
+            "meta_description": "Learn how to build reusable design systems that bridge the gap between designers and developers.",
+            "keywords": [
+                "design systems",
+                "component architecture",
+                "Figma",
+                "React components",
+                "UI design"
+            ],
+            "og_title": "Graphic Design Is Code: Build Interfaces as Reusable Systems",
+            "og_description": "Treating UI as a system speeds delivery and reduces rework.",
+            "og_image": null,
+            "twitter_card": "summary"
+        },
+        "statistics": {
+            "views": 0,
+            "shares": 0,
+            "comments": 0,
+            "likes": 0
+        },
+        "content_structure": {
+            "sections": [
+                "Introduction",
+                "A practical workflow",
+                "Quick checklist for design–engineer parity"
+            ],
+            "has_code_examples": false,
+            "has_statistics": false,
+            "has_cta": false
+        },
+        "related_articles": [],
+        "file_path": "articles/article_0a01.php",
+        "template": "blog-article",
+        "comments_enabled": true,
+        "featured": true,
+        "sticky": false,
+        "visibility": "public",
+        "language": "en",
+        "schema_version": "1.0"
+    },
+    "article_template": {
+        "id": "",
+        "title": "",
+        "slug": "",
+        "author": {
+            "name": "",
+            "role": "",
+            "email": "",
+            "bio": ""
+        },
+        "published_date": "",
+        "modified_date": "",
+        "status": "draft|published|archived",
+        "category": "",
+        "tags": [],
+        "excerpt": "",
+        "featured_image": {
+            "url": "",
+            "alt": "",
+            "caption": "",
+            "width": 0,
+            "height": 0
+        },
+        "word_count": 0,
+        "reading_time": 0,
+        "seo": {
+            "meta_title": "",
+            "meta_description": "",
+            "keywords": [],
+            "og_title": "",
+            "og_description": "",
+            "og_image": "",
+            "twitter_card": "summary|summary_large_image",
+            "canonical_url": ""
+        },
+        "statistics": {
+            "views": 0,
+            "shares": 0,
+            "comments": 0,
+            "likes": 0,
+            "avg_time_on_page": 0
+        },
+        "content_structure": {
+            "sections": [],
+            "has_code_examples": false,
+            "has_images": false,
+            "has_videos": false,
+            "has_statistics": false,
+            "has_cta": false
+        },
+        "related_articles": [],
+        "file_path": "",
+        "template": "blog-article|tutorial|case-study",
+        "comments_enabled": true,
+        "featured": false,
+        "sticky": false,
+        "visibility": "public|private|unlisted",
+        "language": "en",
+        "version": 1,
+        "schema_version": "1.0"
+    }
+}

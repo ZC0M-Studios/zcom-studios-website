@@ -1,0 +1,56 @@
+- c:/xampp/htdocs/index.php:1-49: Main entry point of the application, displays the home page.
+- c:/xampp/htdocs/includes/footer.php:1-20: Contains the footer content and closing HTML tags for all pages.
+- c:/xampp/htdocs/includes/header.php:1-29: Contains the header content, including the HTML head, doctype, and opening body tag.
+- c:/xampp/htdocs/includes/util.php:1-23: Contains utility functions, including a function to generate unique IDs.
+- c:/xampp/htdocs/includes/navbar.php:1-20: Contains the navigation bar for the website.
+- c:/xampp/htdocs/js/event.js:1-8: Empty file for future event handling logic.
+- c:/xampp/htdocs/js/main.js:1-8: Empty file for future main application logic.
+- c:/xampp/htdocs/js/ui.js:1-8: Empty file for future UI-related logic.
+- c:/xampp/htdocs/js/util.js:1-8: Empty file for future utility functions.
+- c:/xampp/htdocs/js/canvas.js:1-115: Contains the logic for a three-layer particle system with interactive cross-shaped particles.
+- c:/xampp/htdocs/css/style-main.scss:1-86: FUI Design System SCSS variables (colors, fonts, spacing, typography scale, animation timing).
+- c:/xampp/htdocs/css/style-main.scss:88-207: Consolidated FUI mixins (glass-effect, glow, borders, corner-brackets, hex-clip, typography).
+- c:/xampp/htdocs/css/style-main.scss:209-268: CSS Custom Properties (FUI design tokens exposed as --color-*, --font-*, --space-*).
+- c:/xampp/htdocs/css/style-main.scss:800-1005: FUI utility classes (status colors, typography, panels, glow, status indicators, data pairs, progress bars).
+- c:/xampp/htdocs/css/style-main.scss:1090-1170: FUI animation keyframes (pulse, glow-pulse, scan-sweep, blink, data-tick) with reduced-motion support.
+- c:/xampp/htdocs/css/style-main.scss:1175-1300: Futuristic sci-fi menu components with hover animations, click effects, and glow bars.
+- c:/xampp/htdocs/css/style-main.scss:1350-1550: Sci-fi button components with variants (primary, danger, success) and sizes (sm, lg).
+- c:/xampp/htdocs/ui-demo.php:1-398: Demo page with interactive sci-fi menus, buttons, click handlers, and keyboard navigation.
+- c:/xampp/htdocs/blog.php:1-75: Blog page main content with featured article carousel and article list grid.
+- c:/xampp/htdocs/js/articles.js:1-390: Articles management system handling loading, displaying, and managing blog articles including carousel and grid view.
+- c:/xampp/htdocs/css/style-blog.scss:113-434: Blog page carousel and grid styles with sci-fi themed components.
+- c:/xampp/htdocs/css/style-blog.scss:435-712: Articles grid layout with individual article cards featuring sci-fi styling and responsive design.
+- c:/xampp/htdocs/data/metadata/article.metadata.json:1-305: Article metadata storage with published articles and template structure.
+- c:/xampp/htdocs/portfolio.php:1-60: Portfolio page main content with project filtering and grid display.
+- c:/xampp/htdocs/js/portfolio.js:1-175: Portfolio management system handling loading, displaying, and filtering portfolio projects.
+- c:/xampp/htdocs/portfolio/project.php:1-236: Individual project detail page displaying full project details with tech stack, features, and related content.
+- c:/xampp/htdocs/prompts.php:1-65: Prompts library page with search, filtering, and prompt cards display.
+- c:/xampp/htdocs/js/prompts.js:1-185: Prompts library management system handling loading, displaying, searching, and filtering AI prompts.
+- c:/xampp/htdocs/prompts/prompt.php:1-289: Individual prompt detail page displaying full prompt details with copy functionality and related content.
+- c:/xampp/htdocs/tools.php:1-110: Tools directory page showcasing all available developer utilities.
+- c:/xampp/htdocs/tools/json-formatter.php:1-220: JSON Formatter & Validator Tool with client-side JSON formatting, validation, and manipulation.
+- c:/xampp/htdocs/tags/tag.php:1-165: Tag aggregation page displaying all content (blog posts, projects, prompts) with a specific tag.
+- c:/xampp/htdocs/api/get_tag_content.php:1-100: Get Tag Content API returning all content (blog, projects, prompts) with specified tag.
+- c:/xampp/htdocs/api/increment_prompt_copy.php:1-38: Increment Prompt Copy Count API incrementing the copy count for a prompt.
+- admin/projects/create.php:1-150: Admin form page for creating new portfolio projects.
+- admin/api/create_project.php:1-85: API endpoint to create new projects in the database.
+- admin/prompts/create.php:1-145: Admin form page for creating new AI prompts.
+- admin/api/create_prompt.php:1-85: API endpoint to create new prompts in the database.
+- admin/tools/create.php:1-145: Admin form page for creating new utilities/tools.
+- admin/api/create_tool.php:1-85: API endpoint to create new tools in the database.
+- admin/tags/create.php:1-125: Admin form page for creating new tags in the registry.
+- admin/api/create_tag.php:1-65: API endpoint to create new tags in the tags_registry.
+- admin/tags/edit.php:1-263: Admin form page for editing existing tags in the registry with live preview.
+- admin/api/update_tag.php:1-90: API endpoint to update existing tags in the tags_registry.
+- includes/metadata_helper.php:1-150: Metadata helper functions for loading and working with extended metadata files.
+- data/metadata/tags.metadata.json:1-75: Extended metadata for tags registry - icons, colors, and category definitions.
+- data/metadata/prompts.metadata.json:1-70: Extended metadata for prompts - categories, templates, and usage patterns.
+- data/metadata/tools.metadata.json:1-70: Extended metadata for tools/utilities - categories and presentation options.
+- data/metadata/project.metadata.json:1-87: Extended metadata for projects - types, roles, and presentation options.
+- data/database/schema_junction_tables.sql:1-100: Junction tables for many-to-many tag relationships and project extended data.
+- data/database/schema_tags_styling.sql:1-60: SQL migration for tag display styling columns (text_color, bg_color, border_color, border_type, shadow_color).
+- admin/articles/list.php:1-269: Admin Articles List Page with compact table view, filtering, and pagination.
+- admin/projects/list.php:1-145: Admin Projects List Page with compact table view and status filtering.
+- admin/prompts/list.php:1-145: Admin Prompts List Page with compact table view and visibility filtering.
+- admin/tools/list.php:1-130: Admin Tools List Page with compact table view and search.
+- admin/tags/list.php:1-160: Admin Tags List Page with live styling preview, category filtering, and color display.

@@ -1,0 +1,87 @@
+{
+    "_schema": {
+        "version": "1.0",
+        "description": "Extended metadata for projects - types, roles, and presentation options",
+        "source_of_truth": "Database projects table for core data, this file for presentation metadata"
+    },
+    "project_types": {
+        "web_app": {
+            "display_name": "Web Application",
+            "icon": "bi-globe",
+            "color": "#0099ff"
+        },
+        "mobile_app": {
+            "display_name": "Mobile Application",
+            "icon": "bi-phone",
+            "color": "#00cc52"
+        },
+        "desktop_app": {
+            "display_name": "Desktop Application",
+            "icon": "bi-display",
+            "color": "#9933ff"
+        },
+        "game": {
+            "display_name": "Game",
+            "icon": "bi-joystick",
+            "color": "#ff6b00"
+        },
+        "library": {
+            "display_name": "Library/Package",
+            "icon": "bi-box-seam",
+            "color": "#ffaa00"
+        },
+        "api": {
+            "display_name": "API/Backend Service",
+            "icon": "bi-hdd-network",
+            "color": "#00cc99"
+        },
+        "design_system": {
+            "display_name": "Design System",
+            "icon": "bi-palette",
+            "color": "#cc0066"
+        },
+        "other": {
+            "display_name": "Other",
+            "icon": "bi-folder",
+            "color": "#808080"
+        }
+    },
+    "project_roles": {
+        "lead_developer": "Lead Developer",
+        "frontend_developer": "Frontend Developer",
+        "backend_developer": "Backend Developer",
+        "full_stack": "Full Stack Developer",
+        "designer": "Designer",
+        "contributor": "Contributor"
+    },
+    "status_display": {
+        "concept": { "label": "Concept", "color": "#808080", "icon": "bi-lightbulb" },
+        "in_development": { "label": "In Development", "color": "#ffaa00", "icon": "bi-gear" },
+        "completed": { "label": "Completed", "color": "#00cc52", "icon": "bi-check-circle" },
+        "live": { "label": "Live", "color": "#0099ff", "icon": "bi-broadcast" },
+        "archived": { "label": "Archived", "color": "#cc0000", "icon": "bi-archive" }
+    },
+    "template": {
+        "id": "",
+        "name": "",
+        "slug": "",
+        "type": "web_app",
+        "status": "concept",
+        "tagline": "",
+        "description": "",
+        "long_description": "",
+        "role": "full_stack",
+        "date_started": null,
+        "date_completed": null,
+        "featured": false,
+        "display_order": 0,
+        "visibility": "public",
+        "tags": []
+    },
+    "defaults": {
+        "type": "web_app",
+        "status": "concept",
+        "role": "full_stack",
+        "visibility": "public"
+    }
+}

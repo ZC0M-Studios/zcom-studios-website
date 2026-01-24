@@ -1,0 +1,1774 @@
+// ==============================================
+// Modern Slick Metallic Dark Theme Stylesheet
+// FUI Design System Integration
+// ==============================================
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Electrolize&family=JetBrains+Mono:wght@300;400;500&family=Jura:wght@300..700&family=Libre+Barcode+39+Extended&family=Noto+Emoji:wght@300..700&family=Noto+Sans+Symbols+2&family=Noto+Sans+Symbols:wght@100..900&family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&family=Rajdhani:wght@300;400;500;600;700&family=Saira:ital,wght@0,100..900;1,100..900&family=Share+Tech+Mono&family=VT323&display=swap');
+
+// ========================================================
+// SECTION 1: SCSS VARIABLES (Design Tokens)
+// ========================================================
+
+// Font Family Definitions (FUI-aligned)
+$font-primary: 'Rajdhani', sans-serif;
+$font-heading: 'Orbitron', sans-serif;         // FUI: --font-display
+$font-heading-alt: 'Audiowide', sans-serif;
+$font-subheading: 'Oxanium', sans-serif;
+$font-nav: 'Electrolize', sans-serif;          // FUI: --font-ui
+$font-accent: 'Saira', sans-serif;
+$font-mono: 'JetBrains Mono', 'VT323', monospace; // FUI: --font-mono (upgraded)
+$font-mono-condensed: 'Share Tech Mono', monospace; // FUI: --font-mono-condensed
+$font-geometric: 'Jura', sans-serif;
+
+// Color Palette - Core (mapped to FUI naming)
+$dark-bg: #0a0e27;               // FUI: --color-deep-space
+$darker-bg: #05070f;             // FUI: --color-abyss
+$lighter-bg: #1c3c53;            // FUI: --color-gunmetal
+$card-bg: #0f1428;               // FUI: --color-carbon
+$accent-metallic: #64b5f6;       // FUI: --color-primary-500 (cyan)
+$accent-gold: #ffd700;
+$accent-orange: rgba(255,100,0, 0.8);
+$accent-orange2: rgba(255,150,0,0.8);
+$accent-silver: #c0c0c0;
+$text-primary: #e0e0e0;          // FUI: --color-text-primary
+$text-secondary: #6897c1;        // FUI: --color-text-secondary
+$text-tertiary: #4a5d6a;         // FUI: --color-text-tertiary
+$border-color: #1e77ba;
+$shadow-dark: rgba(0, 0, 0, 0.8);
+$shadow-metallic: rgba(100, 181, 246, 0.2);
+
+// FUI Status Colors
+$status-success: #00ff88;
+$status-success-dim: #00cc6a;
+$status-warning: #ffaa00;
+$status-warning-dim: #cc8800;
+$status-error: #ff3355;
+$status-error-dim: #cc2944;
+$status-info: #4488ff;
+$status-scanning: #aa66ff;
+$status-standby: #666688;
+
+// Sci-Fi UI Colors (consolidated with FUI)
+$ui-cyan: $accent-metallic;
+$ui-cyan-glow: rgba(100, 181, 246, 0.6);
+$ui-dark: rgba(10, 20, 30, 0.85);
+$ui-darker: rgba(5, 10, 15, 0.95);
+$ui-border: rgba(100, 181, 246, 0.4);
+$ui-border-bright: rgba(100, 181, 246, 0.8);
+$ui-text-dim: rgba(100, 150, 180, 0.6);
+$ui-badge-gold: #d4a017;
+
+// FUI Spacing Scale (4px base unit)
+$space-unit: 4px;
+$space-1: $space-unit;        // 4px
+$space-2: $space-unit * 2;    // 8px
+$space-3: $space-unit * 3;    // 12px
+$space-4: $space-unit * 4;    // 16px
+$space-5: $space-unit * 5;    // 20px
+$space-6: $space-unit * 6;    // 24px
+$space-8: $space-unit * 8;    // 32px
+
+// FUI Type Scale
+$text-3xs: 0.625rem;   // 10px
+$text-2xs: 0.6875rem;  // 11px
+$text-xs: 0.75rem;     // 12px
+$text-sm: 0.8125rem;   // 13px
+$text-base: 0.875rem;  // 14px
+$text-md: 1rem;        // 16px
+$text-lg: 1.125rem;    // 18px
+$text-xl: 1.25rem;     // 20px
+$text-2xl: 1.5rem;     // 24px
+
+// FUI Animation Timing
+$ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-snap: cubic-bezier(0.68, -0.55, 0.26, 1.55);
+$duration-fast: 150ms;
+$duration-normal: 300ms;
+$duration-slow: 500ms;
+
+// ========================================================
+// SECTION 2: CONSOLIDATED MIXINS (FUI-aligned)
+// ========================================================
+
+// Core Effect Mixins
+@mixin glass-effect {
+  background: rgba(15, 20, 40, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(100, 181, 246, 0.1);
+}
+
+@mixin metallic-shadow {
+  box-shadow:
+    0 8px 32px $shadow-metallic,
+    0 0 20px rgba(100, 181, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@mixin smooth-transition($duration: $duration-normal) {
+  transition: all $duration $ease-default;
+}
+
+@mixin text-gradient {
+  background: linear-gradient(135deg, $accent-metallic, $accent-silver);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// FUI Glow Effects (consolidated)
+@mixin fui-glow($color: $ui-cyan, $intensity: 0.3) {
+  box-shadow: 0 0 10px rgba($color, $intensity);
+}
+
+@mixin fui-glow-strong($color: $ui-cyan) {
+  box-shadow:
+    0 0 10px rgba($color, 0.4),
+    0 0 20px rgba($color, 0.2),
+    0 0 40px rgba($color, 0.1);
+}
+
+@mixin fui-text-glow($color: currentColor) {
+  text-shadow: 0 0 10px $color;
+}
+
+// FUI Border Styles (consolidated)
+@mixin fui-border($color: $ui-border) {
+  border: 1px solid $color;
+}
+
+@mixin fui-border-active($color: $ui-cyan) {
+  border: 1px solid $color;
+}
+
+// FUI Corner Brackets (reusable pattern)
+@mixin fui-corner-brackets($size: 12px, $color: $ui-cyan, $width: 2px) {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: $size;
+    height: $size;
+    border-color: $color;
+    border-style: solid;
+    pointer-events: none;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+    border-width: $width 0 0 $width;
+  }
+
+  &::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 $width $width 0;
+  }
+}
+
+// FUI Hexagonal Clip Path
+@mixin fui-hex-clip($corner: 8px) {
+  clip-path: polygon(
+    $corner 0%, calc(100% - $corner) 0%,
+    100% $corner, 100% calc(100% - $corner),
+    calc(100% - $corner) 100%, $corner 100%,
+    0% calc(100% - $corner), 0% $corner
+  );
+}
+
+// FUI Panel Styles (consolidated)
+@mixin fui-panel {
+  position: relative;
+  background: $dark-bg;
+  @include fui-border(rgba($ui-cyan, 0.3));
+  @include fui-corner-brackets(12px, $ui-cyan, 2px);
+}
+
+// FUI Typography Mixins
+@mixin fui-mono {
+  font-family: $font-mono;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+@mixin fui-label {
+  font-family: $font-mono;
+  font-size: $text-2xs;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-secondary;
+}
+
+@mixin fui-data-value {
+  @include fui-mono;
+  font-size: $text-sm;
+  color: $ui-cyan;
+}
+
+// ========================================================
+// SECTION 3: CSS CUSTOM PROPERTIES (FUI Design Tokens)
+// ========================================================
+:root {
+  // Color tokens (FUI naming convention)
+  --color-void: #000000;
+  --color-abyss: #{$darker-bg};
+  --color-deep-space: #{$dark-bg};
+  --color-dark-matter: #{$card-bg};
+  --color-carbon: #1a1f2e;
+  --color-gunmetal: #{$lighter-bg};
+
+  --color-primary-500: #{$accent-metallic};
+  --color-primary-600: #00b4d8;
+  --color-primary-700: #0096b4;
+  --color-primary-800: #007a94;
+
+  --color-text-primary: #{$text-primary};
+  --color-text-secondary: #{$text-secondary};
+  --color-text-tertiary: #{$text-tertiary};
+  --color-text-accent: #{$ui-cyan};
+
+  // Status colors
+  --color-success: #{$status-success};
+  --color-warning: #{$status-warning};
+  --color-error: #{$status-error};
+  --color-info: #{$status-info};
+  --color-scanning: #{$status-scanning};
+  --color-standby: #{$status-standby};
+
+  // Typography tokens
+  --font-mono: #{$font-mono};
+  --font-display: #{$font-heading};
+  --font-ui: #{$font-nav};
+
+  // Spacing tokens
+  --space-1: #{$space-1};
+  --space-2: #{$space-2};
+  --space-3: #{$space-3};
+  --space-4: #{$space-4};
+  --space-6: #{$space-6};
+  --space-8: #{$space-8};
+
+  // Animation tokens
+  --ease-default: #{$ease-default};
+  --duration-fast: #{$duration-fast};
+  --duration-normal: #{$duration-normal};
+}
+
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: linear-gradient(135deg, $darker-bg 0%, $dark-bg 100%);
+  color: $text-primary;
+  font-family: $font-primary;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(100, 181, 246, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  @include smooth-transition;
+}
+
+h1 {
+  font-size: 5rem;
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  @include text-gradient;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+h2 {
+  font-size: 2.2rem;
+  font-family: $font-subheading;
+  font-weight: 600;
+  color: $accent-metallic;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-size: 1.8rem;
+  font-family: $font-subheading;
+  font-weight: 500;
+  color: $accent-silver;
+  letter-spacing: 0.5px;
+}
+
+p {
+  color: $text-secondary;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: $accent-metallic;
+  text-decoration: none;
+  position: relative;
+  @include smooth-transition;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, $accent-metallic, $accent-gold);
+    @include smooth-transition;
+  }
+  
+  &:hover {
+    color: $accent-gold;
+    
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+#title-1 {
+    text-shadow: 0 0 4px #00CCFF, 0 0 8px #00CCFF, 0 0 16px #00aaff, 0 0 32px #0091ff, 0 0 64px #0084ff5e;
+    font-size: 100px;
+    font-family: "Orbitron";
+    letter-spacing: 0.5em;
+    line-height: 100px;
+    margin-bottom: 0;
+    transition: all 0.3s ease-in-out;
+    @include text-gradient;
+    @include smooth-transition;
+    &:hover {
+        text-shadow: 0 0 32px #FFFFFF;
+        color: #FFFFFF;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+#title-2{
+    color: white;
+    font-family: "Orbitron";
+    text-shadow: 0 0 32px #FFFFFF;
+    font-size: 64px;
+    letter-spacing: 0.5em;
+}
+
+#logo_header {
+    width: 200px;
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 20px;
+    filter: brightness(1.9) hue-rotate(10deg);
+    transition: all 0.3s ease-in-out;
+}
+
+#headerCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+.tag-personal{
+    z-index: 33;
+    display: inline-block;
+    font-size: 1.0rem;
+    font-family: 'Jura', sans-serif;
+    font-weight: 300;
+    color: #355baf;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 4px 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    &:hover {
+        color: #FFFFFF;
+        background-color:rgba(100, 181, 246, 0.3);
+    }
+}
+
+#tag-1 {
+    z-index: 2;
+    text-shadow: 0 0 8px $accent-orange2,  0 0 16px $accent-orange2,  0 0 32px $accent-orange;
+    color: $accent-orange2;
+    &:hover {
+        color: #FFFFFF;
+        background-color: #FFFFFF0A;
+    }
+}
+
+#tag-2 {
+    text-shadow: 0 0 32px $accent-silver;
+    color: $accent-silver;
+}
+
+#tag-3 {
+    text-shadow: 0 0 32px $accent-metallic;
+    color: $accent-metallic;
+}
+
+#tag-4 {
+    text-shadow: 0 0 32px $accent-silver;
+    color: $accent-silver;
+}
+
+// Icons
+.icon {
+  width: 1.5rem;
+  height: auto;
+}
+
+.icon-primary {
+  color: $accent-metallic;
+}
+
+// Font utility classes
+.font-heading {
+  font-family: $font-heading;
+}
+
+.font-heading-alt {
+  font-family: $font-heading-alt;
+}
+
+.font-subheading {
+  font-family: $font-subheading;
+}
+
+.font-nav {
+  font-family: $font-nav;
+}
+
+.font-accent {
+  font-family: $font-accent;
+}
+
+.font-mono {
+  font-family: $font-mono;
+  font-size: 0.95rem;
+}
+
+.font-geometric {
+  font-family: $font-geometric;
+}
+// Container & Layout
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-2 {
+  @extend .grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  @extend .grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+// Cards & Components
+.card {
+  @include glass-effect;
+  @include metallic-shadow;
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  @include smooth-transition;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $accent-metallic, transparent);
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+      0 16px 48px rgba(100, 181, 246, 0.3),
+      0 0 30px rgba(100, 181, 246, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $border-color;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-family: $font-subheading;
+  font-weight: 600;
+  color: $accent-metallic;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.card-content {
+  color: $text-secondary;
+  line-height: 1.8;
+}
+
+.btn-custom{
+  background-color: transparent;
+  transition: all 1s ease-in-out;
+  &:hover{
+    background-image: url("../img/bg/bg_texture_grid.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    box-shadow: inset 0 0 24px 1px rgba(0,0,0,1);
+    transition: all 1s ease-in-out;
+    animation: hoverAnimation 1s ease-in-out;
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 0px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: $font-accent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  @include smooth-transition;
+  &:hover{
+    background-image: url("../img/bg/bg_texture_grid.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    transition: all 1s ease-in-out;
+    animation: hoverAnimation 1s ease-in-out;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    @include smooth-transition;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $accent-metallic, #42a5f5);
+  color: $dark-bg;
+  box-shadow: 0 4px 15px rgba(100, 181, 246, 0.4);
+
+  &:hover {
+    background-image: url("../img/bg/bg_texture_grid.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(100, 181, 246, 0.6);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  color: $accent-metallic;
+  border: 2px solid $accent-metallic;
+
+  &:hover {
+    background-image: url("../img/bg/bg_texture_grid.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    background-color: rgba(100, 181, 246, 0.1);
+    box-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
+  }
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, $accent-gold, #ffc107);
+  color: $dark-bg;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+
+  &:hover {
+    background-image: url("../img/bg/bg_texture_grid.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.navbar-brand-logo{
+  filter: brightness(1.0) hue-rotate(0deg);
+  transition: all 0.5s ease-in-out;
+  &:hover{
+    filter: brightness(1.2) hue-rotate(120deg) drop-shadow(0 0 20px 1px rgba(0, 208, 255, 0.871));
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+// Navigation
+nav {
+  @include glass-effect;
+  @include metallic-shadow;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    
+    li a {
+      color: $text-primary;
+      font-family: $font-nav;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+      position: relative;
+      padding: 0.5rem 0;
+      
+      &::after {
+        background: linear-gradient(90deg, $accent-metallic, $accent-gold);
+      }
+      
+      &:hover {
+        color: $accent-metallic;
+      }
+    }
+  }
+}
+
+// Forms
+input, textarea, select {
+  background: rgba(15, 20, 40, 0.5);
+  border: 1px solid $border-color;
+  color: $text-primary;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  @include smooth-transition;
+  
+  &:focus {
+    outline: none;
+    border-color: $accent-metallic;
+    box-shadow: 0 0 15px rgba(100, 181, 246, 0.3);
+    background: rgba(15, 20, 40, 0.7);
+  }
+  
+  &::placeholder {
+    color: $text-secondary;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $accent-metallic;
+    font-weight: 500;
+  }
+}
+
+// Section Styling
+section {
+  padding: 4rem 0;
+  
+  &:nth-child(even) {
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.02), rgba(255, 215, 0, 0.01));
+  }
+}
+
+// Footer
+footer {
+  @include glass-effect;
+  @include metallic-shadow;
+  position: fixed;
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 1px solid $border-color;
+  
+  p {
+    color: $text-secondary;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Utility Classes
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-metallic {
+  color: $accent-metallic;
+}
+
+.text-gold {
+  color: $accent-gold;
+}
+
+.text-muted {
+  color: $text-secondary;
+}
+
+.mt {
+  margin-top: 1rem;
+  
+  &-lg {
+    margin-top: 2rem;
+  }
+  
+  &-xl {
+    margin-top: 3rem;
+  }
+}
+
+.mb {
+  margin-bottom: 1rem;
+  
+  &-lg {
+    margin-bottom: 2rem;
+  }
+  
+  &-xl {
+    margin-bottom: 3rem;
+  }
+}
+
+.p {
+  padding: 1rem;
+
+  &-lg {
+    padding: 2rem;
+  }
+
+  &-xl {
+    padding: 3rem;
+  }
+}
+
+// ========================================================
+// FUI UTILITY CLASSES (Design System Extensions)
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [FUI_STATUS_COLORS]
+    FUNCTION: FUI Status Indicator Utilities
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Semantic color classes for status states
+    UniqueID: 789020
+=========================================================== */
+.fui-success { color: $status-success; }
+.fui-success-dim { color: $status-success-dim; }
+.fui-warning { color: $status-warning; }
+.fui-warning-dim { color: $status-warning-dim; }
+.fui-error { color: $status-error; }
+.fui-error-dim { color: $status-error-dim; }
+.fui-info { color: $status-info; }
+.fui-scanning { color: $status-scanning; }
+.fui-standby { color: $status-standby; }
+
+/* ========================================================
+    //ANCHOR [FUI_TYPOGRAPHY_UTILS]
+    FUNCTION: FUI Typography Utility Classes
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Data display, labels, and monospace utilities
+    UniqueID: 789021
+=========================================================== */
+.fui-mono {
+  @include fui-mono;
+}
+
+.fui-label {
+  @include fui-label;
+}
+
+.fui-data {
+  @include fui-data-value;
+}
+
+.fui-display {
+  font-family: $font-mono;
+  font-size: $text-2xl;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: $ui-cyan;
+}
+
+.fui-micro {
+  font-family: $font-mono-condensed;
+  font-size: $text-3xs;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.fui-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_PANEL_UTILS]
+    FUNCTION: FUI Panel & Frame Utilities
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Corner brackets, frames, and panel styles
+    UniqueID: 789022
+=========================================================== */
+.fui-panel {
+  @include fui-panel;
+  padding: $space-4;
+}
+
+.fui-frame {
+  @include fui-corner-brackets(16px, $ui-cyan, 2px);
+  padding: $space-4;
+}
+
+.fui-hex {
+  @include fui-hex-clip(8px);
+}
+
+/* ========================================================
+    //ANCHOR [FUI_GLOW_UTILS]
+    FUNCTION: FUI Glow Effect Utilities
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Box and text glow effects
+    UniqueID: 789023
+=========================================================== */
+.fui-glow {
+  @include fui-glow;
+}
+
+.fui-glow-strong {
+  @include fui-glow-strong;
+}
+
+.fui-text-glow {
+  @include fui-text-glow;
+}
+
+.fui-glow-pulse {
+  animation: fui-glow-pulse 2s ease-in-out infinite;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_STATUS_INDICATOR]
+    FUNCTION: FUI Status Indicator Component
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Diamond-shaped status indicator with semantic states
+    UniqueID: 789024
+=========================================================== */
+.fui-status {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: currentColor;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+
+  &.online {
+    color: $status-success;
+    &::before { animation: fui-pulse 2s ease-in-out infinite; }
+  }
+  &.offline { color: $status-error; }
+  &.warning { color: $status-warning; }
+  &.standby { color: $status-standby; }
+  &.scanning {
+    color: $status-scanning;
+    &::before { animation: fui-pulse 2s ease-in-out infinite; }
+  }
+}
+
+/* ========================================================
+    //ANCHOR [FUI_DATA_PAIR]
+    FUNCTION: FUI Key-Value Data Pair Component
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Formatted key-value pair for data display
+    UniqueID: 789025
+=========================================================== */
+.fui-data-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: $space-1 0;
+  border-bottom: 1px solid $lighter-bg;
+
+  &:last-child { border-bottom: none; }
+}
+
+.fui-data-key {
+  @include fui-label;
+}
+
+.fui-data-val {
+  @include fui-data-value;
+}
+
+/* ========================================================
+    //ANCHOR [FUI_PROGRESS_BAR]
+    FUNCTION: FUI Segmented Progress Bar
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Segmented progress bar for FUI displays
+    UniqueID: 789026
+=========================================================== */
+.fui-progress {
+  display: flex;
+  gap: 2px;
+  height: 16px;
+}
+
+.fui-progress-segment {
+  flex: 1;
+  background: $card-bg;
+  border: 1px solid rgba($ui-cyan, 0.3);
+
+  &.filled {
+    background: rgba($ui-cyan, 0.6);
+    border-color: $ui-cyan;
+    box-shadow: 0 0 4px rgba($ui-cyan, 0.3);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  h3 {
+    font-size: 1.4rem;
+  }
+  
+  nav ul {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  section {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.3rem;
+  }
+  
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(100, 181, 246, 0.6);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 4px #00CCFF, 0 0 8px #00CCFF, 0 0 16px #00aaff, 0 0 32px #0091ff, 0 0 64px rgba(0, 132, 255, 0.368627451);
+  }
+  50% {
+    text-shadow: 0 0 32px #FFFFFF;
+    color: #FFFFFF;
+  }
+}
+
+.text-glow {
+  animation: textGlow 8s ease-in-out infinite;
+}
+
+// ========================================================
+// FUI ANIMATION KEYFRAMES (Consolidated)
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [FUI_ANIMATIONS]
+    FUNCTION: FUI Keyframe Animations
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Consolidated animation library for FUI effects
+    UniqueID: 789030
+=========================================================== */
+
+@keyframes fui-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes fui-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba($ui-cyan, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba($ui-cyan, 0.5),
+      0 0 40px rgba($ui-cyan, 0.3);
+  }
+}
+
+@keyframes fui-scan-sweep {
+  from { background-position: -100% 0; }
+  to { background-position: 200% 0; }
+}
+
+@keyframes fui-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes fui-data-tick {
+  0% { color: $ui-cyan; }
+  50% { color: $text-primary; }
+  100% { color: $ui-cyan; }
+}
+
+// FUI Animation Utility Classes
+.fui-scanning {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($ui-cyan, 0.3) 50%,
+      transparent 100%
+    );
+    background-size: 50% 100%;
+    animation: fui-scan-sweep 2s linear infinite;
+  }
+}
+
+.fui-blink {
+  &::after {
+    content: '█';
+    animation: fui-blink 1s step-end infinite;
+    color: $ui-cyan;
+  }
+}
+
+// ========================================================
+// Accessibility: Reduced Motion
+// ========================================================
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ========================================================
+// Sci-Fi UI Components (Cyberpunk Menu Style)
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [SCIFI_MENU_ITEM]
+    FUNCTION: .scifi-menu-item
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Futuristic menu item with cyan borders, hover effects, click animations, and badge support
+    UniqueID: 789001
+=========================================================== */
+.scifi-menu-item {
+  position: relative;
+  background: $ui-dark;
+  border: 1px solid $ui-border;
+  border-left: 3px solid $ui-border;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: $font-nav;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: $ui-text-dim;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  transform: translateX(0);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid $ui-border;
+    border-right: 1px solid $ui-border;
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+
+  // Animated scan line effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $ui-cyan, transparent);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    background: $ui-darker;
+    border-color: $ui-border-bright;
+    border-left-color: $ui-cyan;
+    border-left-width: 4px;
+    color: $ui-cyan;
+    transform: translateX(4px);
+    box-shadow:
+      inset 0 0 20px rgba(100, 181, 246, 0.1),
+      0 0 15px $ui-cyan-glow,
+      -4px 0 12px rgba(100, 181, 246, 0.3);
+    animation: menuItemPulse 2s ease-in-out infinite;
+
+    &::before {
+      border-color: $ui-cyan;
+      box-shadow: 0 0 6px $ui-cyan;
+    }
+
+    &::after {
+      opacity: 1;
+      animation: scanLine 1.5s ease-in-out infinite;
+    }
+
+    .scifi-menu-value {
+      color: $ui-cyan;
+      text-shadow: 0 0 8px $ui-cyan-glow;
+    }
+
+    .scifi-menu-badge {
+      transform: scale(1.1);
+      box-shadow:
+        0 0 12px rgba(212, 160, 23, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  // Click/Active press effect
+  &:active:not(.disabled) {
+    transform: translateX(2px) scale(0.98);
+    box-shadow:
+      inset 0 0 30px rgba(100, 181, 246, 0.3),
+      0 0 8px $ui-cyan-glow;
+    transition: all 0.1s ease;
+  }
+
+  &.active {
+    background: linear-gradient(90deg, rgba(100, 181, 246, 0.15) 0%, $ui-darker 100%);
+    border-color: $ui-cyan;
+    border-left-width: 5px;
+    color: $ui-cyan;
+    transform: translateX(4px);
+    box-shadow:
+      inset 4px 0 12px rgba(100, 181, 246, 0.3),
+      0 0 20px $ui-cyan-glow,
+      -4px 0 12px rgba(100, 181, 246, 0.3);
+    animation: activeGlow 3s ease-in-out infinite;
+
+    &::before {
+      border-color: $ui-cyan;
+      box-shadow: 0 0 8px $ui-cyan;
+    }
+
+    // Vertical glow bar on left
+    .scifi-menu-glow-bar {
+      opacity: 1;
+    }
+
+    .scifi-menu-value {
+      color: $ui-cyan;
+      text-shadow: 0 0 8px $ui-cyan-glow;
+    }
+
+    .scifi-menu-badge {
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $ui-dark;
+      border-color: $ui-border;
+      border-left-width: 3px;
+      color: $ui-text-dim;
+      box-shadow: none;
+    }
+  }
+}
+
+.scifi-menu-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scifi-menu-value {
+  font-family: $font-mono;
+  font-size: 1rem;
+  color: $text-secondary;
+  transition: all 0.3s ease;
+}
+
+.scifi-menu-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: $ui-badge-gold;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: bold;
+  font-family: $font-mono;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 8px rgba(212, 160, 23, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+// Vertical glow bar for active items
+.scifi-menu-glow-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, $ui-cyan, transparent);
+  box-shadow: 0 0 10px $ui-cyan;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* ========================================================
+    //ANCHOR [SCIFI_MENU_CONTAINER]
+    FUNCTION: .scifi-menu
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Container for sci-fi menu items
+    UniqueID: 789002
+=========================================================== */
+.scifi-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 400px;
+  padding: 0;
+  margin: 20px 0;
+}
+
+// ========================================================
+// Sci-Fi Menu Animations
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [SCIFI_MENU_ANIMATIONS]
+    FUNCTION: Keyframe animations for sci-fi menu effects
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Hover pulse, scan line, active glow, and badge pulse animations
+    UniqueID: 789003
+=========================================================== */
+
+@keyframes menuItemPulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 20px rgba(100, 181, 246, 0.1),
+      0 0 15px rgba(100, 181, 246, 0.6),
+      -4px 0 12px rgba(100, 181, 246, 0.3);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 25px rgba(100, 181, 246, 0.15),
+      0 0 20px rgba(100, 181, 246, 0.8),
+      -4px 0 16px rgba(100, 181, 246, 0.4);
+  }
+}
+
+@keyframes scanLine {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes activeGlow {
+  0%, 100% {
+    box-shadow:
+      inset 4px 0 12px rgba(100, 181, 246, 0.3),
+      0 0 20px rgba(100, 181, 246, 0.6),
+      -4px 0 12px rgba(100, 181, 246, 0.3);
+  }
+  50% {
+    box-shadow:
+      inset 4px 0 16px rgba(100, 181, 246, 0.4),
+      0 0 25px rgba(100, 181, 246, 0.8),
+      -4px 0 16px rgba(100, 181, 246, 0.4);
+  }
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 8px rgba(212, 160, 23, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 12px rgba(212, 160, 23, 0.9),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+  }
+}
+
+// ========================================================
+// Sci-Fi Button Components
+// ========================================================
+
+/* ========================================================
+    //ANCHOR [SCIFI_BUTTON]
+    FUNCTION: .btn-scifi
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Futuristic button with angled corners, glowing borders, and interactive animations
+    UniqueID: 789005
+=========================================================== */
+.btn-scifi {
+  position: relative;
+  display: inline-block;
+  padding: 8px 12px;
+  background: $ui-dark;
+  border: 2px solid $ui-border;
+  border-bottom: 6px solid $ui-border;
+  color: $text-primary;
+  font-family: $font-nav;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  text-decoration: none;
+  // Corner accents
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid $ui-border;
+    border-left: 2px solid $ui-border;
+    background-color: $ui-border;
+    transition: all 0.3s ease;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid $ui-border;
+    border-right: 2px solid $ui-border;
+    background-color: $ui-border;
+    transition: all 0.3s ease;
+  }
+
+  // Hover state
+  &:hover {
+    background: $ui-darker;
+    border-color: $ui-border-bright;
+    color: $ui-cyan;
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 20px $ui-cyan-glow,
+      inset 0 0 20px rgba(100, 181, 246, 0.1);
+    animation: buttonPulse 2s ease-in-out infinite;
+
+    &::before,
+    &::after {
+      border-color: $ui-cyan;
+      box-shadow: 0 0 8px $ui-cyan;
+      background-color: $ui-cyan;
+    }
+  }
+
+  // Active/Click state
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow:
+      0 0 10px $ui-cyan-glow,
+      inset 0 0 30px rgba(100, 181, 246, 0.3), inset 0 0 16px rgba(100, 181, 246, 0.6), inset 0 0 8px rgba(100, 181, 246, 1);
+    border: 2px solid $ui-cyan;
+    transition: all 0.4s ease;
+
+    &::before,
+    &::after {
+      border-color: $ui-cyan;
+      box-shadow: 0 0 12px $ui-cyan;
+      background-color: $ui-cyan;
+    }
+  }
+
+  // Disabled state
+  &:disabled,
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 2px solid rgba(100,100,100,0.3);
+    &:hover {
+      background: $ui-dark;
+      border-color: $ui-border;
+      color: $text-primary;
+      transform: none;
+      box-shadow: none;
+      animation: none;
+    }
+  }
+}
+
+/* ========================================================
+    //ANCHOR [SCIFI_BUTTON_PRIMARY]
+    FUNCTION: .btn-scifi-primary
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Primary variant with filled background
+    UniqueID: 789006
+=========================================================== */
+.btn-scifi-primary {
+  @extend .btn-scifi;
+  background: linear-gradient(135deg, rgba(100, 181, 246, 0.2), rgba(100, 181, 246, 0.1));
+  border-color: $ui-cyan;
+  color: $ui-cyan;
+  box-shadow: 0 0 15px rgba(100, 181, 246, 0.3);
+
+  &::before,
+  &::after {
+    border-color: $ui-cyan;
+    background-color: $ui-cyan;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.3), rgba(100, 181, 246, 0.15));
+    box-shadow:
+      0 0 25px $ui-cyan-glow,
+      inset 0 0 20px rgba(100, 181, 246, 0.6);
+  }
+
+  &:active {
+    &::before,
+    &::after {
+      border-color: $ui-cyan;
+      background-color: $ui-cyan;
+      box-shadow: 0 0 12px $ui-cyan;
+    }
+  }
+}
+
+/* ========================================================
+    //ANCHOR [SCIFI_BUTTON_DANGER]
+    FUNCTION: .btn-scifi-danger
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Danger/warning variant with red accents
+    UniqueID: 789007
+=========================================================== */
+.btn-scifi-danger {
+  @extend .btn-scifi;
+  border-color: rgba(255, 100, 100, 0.4);
+
+  &::before,
+  &::after {
+    border-color: rgba(255, 100, 100, 0.4);
+    background-color: rgba(255, 100, 100, 0.4);
+  }
+
+  &:hover {
+    border-color: rgba(255, 100, 100, 0.8);
+    color: #ff6464;
+    box-shadow:
+      0 0 20px rgba(255, 100, 100, 0.6),
+      inset 0 0 20px rgba(255, 100, 100, 0.1);
+
+    &::before,
+    &::after {
+      border-color: #ff6464;
+      background-color: #ff6464;
+      box-shadow: 0 0 8px rgba(255, 100, 100, 0.8);
+    }
+  }
+
+  &:active {
+    &::before,
+    &::after {
+      border-color: #ff6464;
+      background-color: #ff6464;
+      box-shadow: 0 0 12px rgba(255, 100, 100, 0.8);
+    }
+  }
+}
+
+/* ========================================================
+    //ANCHOR [SCIFI_BUTTON_SUCCESS]
+    FUNCTION: .btn-scifi-success
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Success variant with green accents
+    UniqueID: 789008
+=========================================================== */
+.btn-scifi-success {
+  @extend .btn-scifi;
+  border-color: rgba(100, 255, 150, 0.4);
+
+  &::before,
+  &::after {
+    border-color: rgba(100, 255, 150, 0.4);
+    background-color: rgba(100, 255, 150, 0.4);
+  }
+
+  &:hover {
+    border-color: rgba(100, 255, 150, 0.8);
+    color: #64ff96;
+    box-shadow:
+      0 0 20px rgba(100, 255, 150, 0.6),
+      inset 0 0 20px rgba(100, 255, 150, 0.1);
+
+    &::before,
+    &::after {
+      border-color: #64ff96;
+      background-color: #64ff96;
+      box-shadow: 0 0 8px rgba(100, 255, 150, 0.8);
+    }
+  }
+
+  &:active {
+    &::before,
+    &::after {
+      border-color: #64ff96;
+      background-color: #64ff96;
+      box-shadow: 0 0 12px rgba(100, 255, 150, 0.8);
+    }
+  }
+}
+
+/* ========================================================
+    //ANCHOR [SCIFI_BUTTON_SMALL]
+    FUNCTION: .btn-scifi-sm
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Small button variant
+    UniqueID: 789009
+=========================================================== */
+.btn-scifi-sm {
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+}
+
+/* ========================================================
+    //ANCHOR [SCIFI_BUTTON_LARGE]
+    FUNCTION: .btn-scifi-lg
+-----------------------------------------------------------
+    Parameters: N/A
+    Returns: N/A
+    Description: Large button variant
+    UniqueID: 789010
+=========================================================== */
+.btn-scifi-lg {
+  padding: 16px 48px;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+}
+
+// Button pulse animation
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(100, 181, 246, 0.6),
+      inset 0 0 20px rgba(100, 181, 246, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(100, 181, 246, 0.8),
+      inset 0 0 25px rgba(100, 181, 246, 0.15);
+  }
+}

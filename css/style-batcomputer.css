@@ -1,0 +1,734 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.bat-theme {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #ffffff;
+  background: #000000;
+  min-height: 100vh;
+}
+body.bat-theme.bat-scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.3) 2px, rgba(0, 0, 0, 0.3) 4px);
+  opacity: 0.3;
+}
+body.bat-theme.bat-grid {
+  background-image: linear-gradient(rgba(64, 64, 64, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(64, 64, 64, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #404040;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #606060;
+}
+
+::-moz-selection {
+  background: #cc0000;
+  color: #ffffff;
+}
+
+::selection {
+  background: #cc0000;
+  color: #ffffff;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_HEADER]
+    FUNCTION: Batcomputer Header Bar
+-----------------------------------------------------------
+    UniqueID: 793001
+=========================================================== */
+.bat-header {
+  background: #0a0a0a;
+  border-bottom: 1px solid #333333;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.bat-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #cc0000;
+  box-shadow: 0 0 10px rgba(255, 0, 51, 0.6);
+}
+
+.bat-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bat-logo .bat-icon {
+  width: 32px;
+  height: 20px;
+  fill: #cc0000;
+}
+.bat-logo .bat-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #808080;
+  text-transform: uppercase;
+}
+
+.bat-case-id {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.bat-case-id .case-number {
+  font-family: "Orbitron", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #cc0000;
+  letter-spacing: 0.1em;
+}
+.bat-case-id .case-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.bat-case-id .case-path {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  color: #606060;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_PANELS]
+    FUNCTION: Batcomputer Panel Components
+-----------------------------------------------------------
+    UniqueID: 793002
+=========================================================== */
+.bat-panel, .bat-panel-red {
+  background: #111111;
+  border: 1px solid #333333;
+  position: relative;
+  overflow: hidden;
+}
+
+.bat-panel-header {
+  background: #0a0a0a;
+  border-bottom: 1px solid #333333;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bat-panel-header .panel-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.bat-panel-header .panel-status {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  color: #606060;
+}
+
+.bat-panel-body {
+  padding: 12px;
+}
+
+.bat-panel-red {
+  border-color: #990000;
+  position: relative;
+}
+.bat-panel-red::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #cc0000;
+  box-shadow: 0 0 10px rgba(255, 0, 51, 0.6);
+}
+.bat-panel-red .bat-panel-header {
+  background: rgba(204, 0, 0, 0.1);
+  border-bottom-color: #990000;
+}
+.bat-panel-red .bat-panel-header .panel-title {
+  color: #ff0033;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_TIMER]
+    FUNCTION: Large Timer/Counter Display
+-----------------------------------------------------------
+    UniqueID: 793003
+=========================================================== */
+.bat-timer {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 72px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.bat-timer.bat-timer-red {
+  color: #ff0033;
+  text-shadow: 0 0 8px #cc0000, 0 0 12px rgba(204, 0, 0, 0.5);
+}
+
+.bat-timer-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #606060;
+  margin-top: 8px;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_DATA]
+    FUNCTION: Data Display Components
+-----------------------------------------------------------
+    UniqueID: 793004
+=========================================================== */
+.bat-data-table {
+  width: 100%;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 11px;
+  border-collapse: collapse;
+}
+.bat-data-table th {
+  text-align: left;
+  padding: 4px 8px;
+  font-weight: 500;
+  color: #606060;
+  border-bottom: 1px solid #333333;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.bat-data-table td {
+  padding: 4px 8px;
+  color: #b0b0b0;
+  border-bottom: 1px solid #303030;
+}
+.bat-data-table td.highlight {
+  color: #ffffff;
+}
+.bat-data-table td.red {
+  color: #ff0033;
+}
+.bat-data-table td.green {
+  color: #00ff66;
+}
+.bat-data-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.bat-hex-display {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 11px;
+  color: #b0b0b0;
+  line-height: 1.6;
+}
+.bat-hex-display .hex-address {
+  color: #606060;
+  margin-right: 12px;
+}
+.bat-hex-display .hex-data {
+  color: #b0b0b0;
+  letter-spacing: 0.1em;
+}
+.bat-hex-display .hex-highlight {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 2px;
+}
+
+.bat-packet-display {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  color: #b0b0b0;
+  line-height: 1.8;
+}
+.bat-packet-display .packet-line {
+  display: flex;
+  gap: 8px;
+}
+.bat-packet-display .packet-line:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.bat-packet-display .packet-id {
+  color: #606060;
+  min-width: 100px;
+}
+.bat-packet-display .packet-data {
+  color: #b0b0b0;
+  flex: 1;
+}
+.bat-packet-display .packet-status {
+  color: #606060;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_PROGRESS]
+    FUNCTION: Progress Bar Components
+-----------------------------------------------------------
+    UniqueID: 793005
+=========================================================== */
+.bat-progress {
+  height: 16px;
+  background: #0a0a0a;
+  border: 1px solid #333333;
+  position: relative;
+  overflow: hidden;
+}
+
+.bat-progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #808080 0px, #808080 8px, #404040 8px, #404040 10px);
+  transition: width 0.3s ease;
+}
+
+.bat-progress-red .bat-progress-fill {
+  background: repeating-linear-gradient(90deg, #cc0000 0px, #cc0000 8px, #990000 8px, #990000 10px);
+}
+
+.bat-percentage {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 32px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.bat-percentage .percent-symbol {
+  font-size: 18px;
+  color: #606060;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_STATUS]
+    FUNCTION: Status Indicator Components
+-----------------------------------------------------------
+    UniqueID: 793006
+=========================================================== */
+.bat-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.bat-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+}
+.bat-status.online {
+  color: #00ff66;
+}
+.bat-status.online::before {
+  animation: bat-pulse 2s ease-in-out infinite;
+}
+.bat-status.offline {
+  color: #404040;
+}
+.bat-status.alert {
+  color: #ff0033;
+}
+.bat-status.alert::before {
+  animation: bat-pulse-fast 0.5s ease-in-out infinite;
+}
+.bat-status.warning {
+  color: #ffaa00;
+}
+.bat-status.encrypted {
+  color: #ff00ff;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_LOG]
+    FUNCTION: Transfer/Activity Log Display
+-----------------------------------------------------------
+    UniqueID: 793007
+=========================================================== */
+.bat-log {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  color: #b0b0b0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.bat-log-entry {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px solid #303030;
+}
+.bat-log-entry:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.bat-log-entry .log-ip {
+  color: #808080;
+  min-width: 110px;
+}
+.bat-log-entry .log-action {
+  color: #606060;
+  min-width: 80px;
+}
+.bat-log-entry .log-details {
+  color: #b0b0b0;
+  flex: 1;
+}
+.bat-log-entry .log-status {
+  color: #00ff66;
+}
+.bat-log-entry .log-status.error {
+  color: #ff0033;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_NETWORK]
+    FUNCTION: Network Connection Display
+-----------------------------------------------------------
+    UniqueID: 793008
+=========================================================== */
+.bat-network-list {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+}
+
+.bat-network-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  color: #b0b0b0;
+}
+.bat-network-item .network-ip {
+  color: #808080;
+  min-width: 100px;
+}
+.bat-network-item .network-type {
+  color: #606060;
+  min-width: 80px;
+}
+.bat-network-item .network-id {
+  color: #b0b0b0;
+  flex: 1;
+}
+
+.bat-server-box {
+  background: #0a0a0a;
+  border: 1px solid #333333;
+  padding: 12px;
+  text-align: center;
+}
+.bat-server-box .server-label {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  color: #606060;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bat-server-box .server-address {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}
+.bat-server-box.active {
+  border-color: #00cc52;
+}
+.bat-server-box.active .server-address {
+  color: #00ff66;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_SIDEBAR]
+    FUNCTION: Sidebar Label Components
+-----------------------------------------------------------
+    UniqueID: 793009
+=========================================================== */
+.bat-sidebar-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #606060;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.bat-section-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #606060;
+  padding: 4px 8px;
+  background: #0a0a0a;
+  border: 1px solid #333333;
+  display: inline-block;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_CHARTS]
+    FUNCTION: Mini Chart Components
+-----------------------------------------------------------
+    UniqueID: 793010
+=========================================================== */
+.bat-mini-chart {
+  height: 40px;
+  background: #0a0a0a;
+  border: 1px solid #333333;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 4px;
+}
+
+.bat-chart-bar {
+  flex: 1;
+  background: #404040;
+  min-height: 2px;
+}
+.bat-chart-bar.active {
+  background: #808080;
+}
+.bat-chart-bar.highlight {
+  background: #ffffff;
+}
+
+.bat-waveform {
+  height: 30px;
+  background: #0a0a0a;
+  border: 1px solid #333333;
+  position: relative;
+  overflow: hidden;
+}
+.bat-waveform::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #303030;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_BUTTONS]
+    FUNCTION: Button Components
+-----------------------------------------------------------
+    UniqueID: 793011
+=========================================================== */
+.bat-btn {
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: #111111;
+  border: 1px solid #333333;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.bat-btn:hover {
+  background: #1a1a1a;
+  border-color: #606060;
+}
+.bat-btn:active {
+  background: #222222;
+}
+
+.bat-btn-red {
+  background: #660000;
+  border-color: #cc0000;
+  color: #ffffff;
+}
+.bat-btn-red:hover {
+  background: #990000;
+  border-color: #ff0033;
+  box-shadow: 0 0 10px rgba(204, 0, 0, 0.3);
+}
+
+/* ========================================================
+    //ANCHOR [BAT_GRID]
+    FUNCTION: Grid Layout System
+-----------------------------------------------------------
+    UniqueID: 793012
+=========================================================== */
+.bat-grid {
+  display: grid;
+  gap: 8px;
+}
+.bat-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.bat-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.bat-grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.bat-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr 300px;
+  grid-template-rows: auto 1fr auto;
+  gap: 8px;
+  min-height: 100vh;
+  padding: 8px;
+}
+
+/* ========================================================
+    //ANCHOR [BAT_TYPOGRAPHY]
+    FUNCTION: Typography Utilities
+-----------------------------------------------------------
+    UniqueID: 793013
+=========================================================== */
+.bat-heading {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.bat-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #606060;
+}
+
+.bat-mono {
+  font-family: "Share Tech Mono", monospace;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+.bat-data {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: #b0b0b0;
+}
+
+.bat-red-text {
+  color: #ff0033;
+}
+
+.bat-glow-text {
+  text-shadow: 0 0 8px #cc0000, 0 0 12px rgba(204, 0, 0, 0.5);
+}
+
+/* ========================================================
+    //ANCHOR [BAT_ANIMATIONS]
+    FUNCTION: Keyframe Animations
+-----------------------------------------------------------
+    UniqueID: 793014
+=========================================================== */
+@keyframes bat-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes bat-pulse-fast {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+@keyframes bat-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+@keyframes bat-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+.bat-blink {
+  animation: bat-blink 1s step-end infinite;
+}
+
+.bat-pulse {
+  animation: bat-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+:focus-visible {
+  outline: 2px solid #cc0000;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}/*# sourceMappingURL=style-batcomputer.css.map */
