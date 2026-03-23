@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/xampp/htdocs/.claude/worktrees/gallant-goldwasser -type f -name package.json -o -name composer.json -o -name Makefile -o -name .env* -o -name vite.config.* -o -name webpack.config.* -o -name docker-compose.yml -o -name .htaccess)",
+      "Bash(grep -r PORT /c/xampp/htdocs/.claude/worktrees/gallant-goldwasser --include=*.php --include=*.js --include=*.json)",
+      "Bash(grep -r \"server\\\\|localhost\\\\|127.0.0.1\\\\|listen\\\\|port\" /c/xampp/htdocs/.claude/worktrees/gallant-goldwasser --include=*.php)",
+      "Bash(grep -r \"listen\\\\|server\\\\|port\\\\|localhost\" /c/xampp/htdocs/.claude/worktrees/gallant-goldwasser/ant-io/src --include=*.js)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where php:*)",
+      "Read(//c/xampp/php/**)",
+      "WebFetch(domain:jsfiddle.net)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebSearch"
+    ]
+  }
+}

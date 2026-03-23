@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ZCOM Studios",
+      "runtimeExecutable": "C:/xampp/php/php.exe",
+      "runtimeArgs": ["-S", "localhost:8080", "-t", "."],
+      "port": 8080
+    },
+    {
+      "name": "Ant-IO",
+      "runtimeExecutable": "C:/xampp/php/php.exe",
+      "runtimeArgs": ["-S", "localhost:8081", "-t", "."],
+      "port": 8081
+    }
+  ]
+}
