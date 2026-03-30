@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Canvas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 100%; height: 100%; overflow: hidden; }
+        canvas { display: block; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <canvas id="gridCanvas"></canvas>
+
+    <script>
+        // ── Constants ────────────────────────────────────────────────────────
+        const CELL        = 50;
+        const MAX_RANGE   = 650;
+        const UNIT_SPEED  = 80;    // px / s
+        const UNIT_RADIUS = 4;
+        const BLOCK_SPEED = 0.025; // line-pos / s per net-surplus unit
+        const FIGHT_INT   = 1.0;   // s between paired fight resolutions
+        const HOVER_FADE  = 300;   // ms for cell hover fade
+
+        // ── Canvas ───────────────────────────────────────────────────────────
+        const canvas = document.getElementById('gridCanvas');
+        const ctx    = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // ── Mouse / Drag ─────────────────────────────────────────────────────
+        let mouseX = -1, mouseY = -1;
+        let currentCellX = -1, currentCellY = -1;
+        let fadeStartTime = 0;
+        let drag = null; // { building: Building }
+
+        canvas.addEventListener('mousemove', e => {
+            const r = canvas.getBoundingClientRect();
+            mouseX = e.clientX - r.left;
+            mouseY = e.clientY - r.top;
+        });
+        canvas.addEventListener('mouseleave', () => {
+            mouseX = mouseY = -1;
+            fadeStartTime = performance.now();
+            drag = null;
+        });
+        canvas.addEventListener('mousedown', e => {
+            if (e.button !== 0) return;
+            const r = canvas.getBoundingClientRect();
+            const b = buildingAt(e.clientX - r.left, e.clientY - r.top);
+            if (b && b.team === 'player') drag = { building: b };
+        });
+        canvas.addEventListener('mouseup', e => {
+            if (!drag) return;
+            const r      = canvas.getBoundingClientRect();
+            const target = buildingAt(e.clientX - r.left, e.clientY - r.top);
+            if (target && target !== drag.building && bldDist(drag.building, target) <= MAX_RANGE) {
+                addConnection(drag.building, target);
+            }
+            drag = null;
+        });
+
+        // ── Geometry helpers ─────────────────────────────────────────────────
+        function bldCenter(b) {
+            return { x: b.cellX * CELL + CELL / 2, y: b.cellY * CELL + CELL / 2 };
+        }
+        function bldDist(a, b) {
+            const ca = bldCenter(a), cb = bldCenter(b);
+            return Math.hypot(ca.x - cb.x, ca.y - cb.y);
+        }
+        function buildingAt(mx, my) {
+            const r = CELL * 0.35;
+            for (const b of buildings) {
+                const c = bldCenter(b);
+                if ((mx - c.x) ** 2 + (my - c.y) ** 2 <= r * r) return b;
+            }
+            return null;
+        }
+        function lerpPt(a, b, t) {
+            const ca = bldCenter(a), cb = bldCenter(b);
+            return { x: ca.x + (cb.x - ca.x) * t, y: ca.y + (cb.y - ca.y) * t };
+        }
+
+        // ── Building ─────────────────────────────────────────────────────────
+        const UNIT_TYPES = ['Infantry', 'Archer', 'Cavalry', 'Mage'];
+
+        class Building {
+            constructor(team, cellX, cellY, level = 1) {
+                this.team        = team;
+                this.cellX       = cellX;
+                this.cellY       = cellY;
+                this.level       = level;
+                this.unitType    = team === 'player' ? 'Infantry'
+                                 : team === 'enemy'  ? 'Grunt'
+                                 : UNIT_TYPES[Math.floor(Math.random() * 4)];
+                this.connections = []; // outbound Connection refs
+                this.spawnTimer  = 0;  // ms accumulator
+            }
+            get color() {
+                return this.team === 'player' ? '#4488FF'
+                     : this.team === 'enemy'  ? '#FF4444' : '#888888';
+            }
+            get tier()           { return Math.min(6, Math.floor(this.level / 10) + 1); }
+            get maxConnections() { return this.tier; }
+            get spawnInterval()  { return Math.max(300, 2500 - this.level * 60); } // ms
+        }
+
+        let buildings = [];
+
+        function randomCellInRegion(c0, c1, r0, r1, occ) {
+            let cx, cy, k;
+            do {
+                cx = c0 + Math.floor(Math.random() * (c1 - c0));
+                cy = r0 + Math.floor(Math.random() * (r1 - r0));
+                k  = `${cx},${cy}`;
+            } while (occ.has(k));
+            occ.add(k);
+            return [cx, cy];
+        }
+
+        function spawnBuildings() {
+            buildings     = [];
+            connections   = [];
+            units         = [];
+            lineBlockades = {};
+
+            const cols = Math.floor(canvas.width  / CELL);
+            const rows = Math.floor(canvas.height / CELL);
+            const occ  = new Set();
+
+            const [px, py] = randomCellInRegion(1, Math.floor(cols / 4), Math.floor(rows * 3 / 4), rows - 1, occ);
+            buildings.push(new Building('player', px, py, 1));
+
+            const [ex, ey] = randomCellInRegion(Math.floor(cols * 3 / 4), cols - 1, 1, Math.floor(rows / 4), occ);
+            buildings.push(new Building('enemy', ex, ey, 1));
+
+            const nc = 3 + Math.floor(Math.random() * 4);
+            for (let i = 0; i < nc; i++) {
+                const [nx, ny] = randomCellInRegion(
+                    Math.floor(cols / 4), Math.floor(cols * 3 / 4),
+                    Math.floor(rows / 4), Math.floor(rows * 3 / 4), occ
+                );
+                buildings.push(new Building('neutral', nx, ny, 1 + Math.floor(Math.random() * 30)));
+            }
+        }
+
+        // ── Connections ──────────────────────────────────────────────────────
+        // connection = { from: Building, to: Building, dashOffset: number }
+        let connections = [];
+
+        function addConnection(from, to) {
+            if (bldDist(from, to) > MAX_RANGE) return;
+            if (connections.find(c => c.from === from && c.to === to)) return;
+            // Evict oldest if at cap
+            if (from.connections.length >= from.maxConnections) {
+                removeConnection(from.connections[0]);
+            }
+            const conn = { from, to, dashOffset: 0 };
+            connections.push(conn);
+            from.connections.push(conn);
+        }
+
+        function removeConnection(conn) {
+            connections           = connections.filter(c => c !== conn);
+            conn.from.connections = conn.from.connections.filter(c => c !== conn);
+            units = units.filter(u => !(u.from === conn.from && u.to === conn.to));
+        }
+
+        // ── Line Blockades ───────────────────────────────────────────────────
+        // Keyed by sorted building-index pair — both travel directions share one entry.
+        // posAB : 0 = at bA end, 1 = at bB end  (bA = lower-index building)
+        // sideA : units from bA side pushing toward bB
+        // sideB : units from bB side pushing toward bA
+        let lineBlockades = {};
+
+        function lbKey(b1, b2) {
+            const i1 = buildings.indexOf(b1), i2 = buildings.indexOf(b2);
+            return i1 < i2 ? `${i1}_${i2}` : `${i2}_${i1}`;
+        }
+        function lbCanonical(b1, b2) {
+            const i1 = buildings.indexOf(b1), i2 = buildings.indexOf(b2);
+            return i1 < i2 ? [b1, b2] : [b2, b1];
+        }
+
+        // ── Units ────────────────────────────────────────────────────────────
+        // unit = { from: Building, to: Building, progress: 0..1, team: string }
+        // progress 0 = at 'from', 1 = at 'to'
+        let units = [];
+
+        function spawnUnit(conn) {
+            units.push({ from: conn.from, to: conn.to, progress: 0, team: conn.from.team });
+        }
+
+        // ── Game Update ──────────────────────────────────────────────────────
+        function update(dt) {
+
+            // 1. Spawn units from buildings with outbound connections
+            for (const b of buildings) {
+                if (!b.connections.length) continue;
+                b.spawnTimer += dt * 1000;
+                if (b.spawnTimer >= b.spawnInterval) {
+                    b.spawnTimer -= b.spawnInterval;
+                    for (const conn of b.connections) spawnUnit(conn);
+                }
+            }
+
+            // 2. Open new blockades where opposing teams share a line
+            for (const c1 of connections) {
+                const key = lbKey(c1.from, c1.to);
+                if (lineBlockades[key]) continue;
+
+                // Bidirectional opposing connection
+                const c2 = connections.find(c => c.from === c1.to && c.to === c1.from);
+                if (c2 && c1.from.team !== c1.to.team) {
+                    const [bA, bB] = lbCanonical(c1.from, c1.to);
+                    lineBlockades[key] = { bA, bB, posAB: 0.5, sideA: 0, sideB: 0, fightTimer: 0 };
+                    continue;
+                }
+
+                // Opposing units released onto the same line after a prior blockade
+                const fwdUnit = units.find(u => u.from === c1.from && u.to === c1.to);
+                const bwdUnit = units.find(u => u.from === c1.to   && u.to === c1.from);
+                if (fwdUnit && bwdUnit && fwdUnit.team !== bwdUnit.team) {
+                    const [bA, bB] = lbCanonical(c1.from, c1.to);
+                    lineBlockades[key] = { bA, bB, posAB: 0.5, sideA: 0, sideB: 0, fightTimer: 0 };
+                }
+            }
+
+            // 3. Move units, stopping at blockade boundary
+            for (const u of units) {
+                const dist = bldDist(u.from, u.to);
+                const step = (UNIT_SPEED / dist) * dt;
+                const key  = lbKey(u.from, u.to);
+                const lb   = lineBlockades[key];
+
+                if (lb) {
+                    const [bA]   = lbCanonical(u.from, u.to);
+                    const isADir = (u.from === bA); // traveling canonical A→B
+
+                    if (isADir) {
+                        // Stop when progress reaches posAB
+                        if (u.progress + step >= lb.posAB) {
+                            u.progress = lb.posAB;
+                            lb.sideA++;
+                            u._done = true;
+                        } else {
+                            u.progress += step;
+                        }
+                    } else {
+                        // B→A in unit frame: stops when progress >= 1 - posAB
+                        if (u.progress + step >= 1 - lb.posAB) {
+                            u.progress = 1 - lb.posAB;
+                            lb.sideB++;
+                            u._done = true;
+                        } else {
+                            u.progress += step;
+                        }
+                    }
+                } else {
+                    u.progress += step;
+                }
+
+                if (!u._done && u.progress >= 1) {
+                    applyUnit(u);
+                    u._done = true;
+                }
+            }
+
+            // 4. Update blockades: fight, advance front line, resolve
+            for (const key of Object.keys(lineBlockades)) {
+                const lb = lineBlockades[key];
+
+                // Paired fights
+                lb.fightTimer += dt;
+                while (lb.fightTimer >= FIGHT_INT && lb.sideA > 0 && lb.sideB > 0) {
+                    lb.sideA--;
+                    lb.sideB--;
+                    lb.fightTimer -= FIGHT_INT;
+                }
+
+                // Shift front toward weaker side
+                const net = lb.sideA - lb.sideB;
+                lb.posAB += net * BLOCK_SPEED * dt;
+                lb.posAB  = Math.max(0.01, Math.min(0.99, lb.posAB));
+
+                // Resolve
+                if (lb.posAB >= 0.99 && lb.sideA > 0) {
+                    releaseWinners(lb, 'A');
+                    delete lineBlockades[key];
+                } else if (lb.posAB <= 0.01 && lb.sideB > 0) {
+                    releaseWinners(lb, 'B');
+                    delete lineBlockades[key];
+                } else if (lb.sideA === 0 && lb.sideB === 0) {
+                    delete lineBlockades[key]; // mutual annihilation
+                }
+            }
+
+            // 5. Remove spent units
+            units = units.filter(u => !u._done);
+
+            // 6. Animate dash offsets
+            for (const conn of connections) {
+                conn.dashOffset = (conn.dashOffset + dt * 40) % 20;
+            }
+        }
+
+        function applyUnit(u) {
+            const b = u.to;
+            if (u.team === b.team) {
+                b.level++;
+            } else {
+                b.level = Math.max(0, b.level - 1);
+                if (b.level === 0) captureBuilding(b, u.team);
+            }
+        }
+
+        function captureBuilding(b, newTeam) {
+            b.team  = newTeam;
+            b.level = 1;
+            for (const conn of [...b.connections]) removeConnection(conn);
+        }
+
+        function releaseWinners(lb, side) {
+            const count = side === 'A' ? lb.sideA : lb.sideB;
+            const from  = side === 'A' ? lb.bA    : lb.bB;
+            const to    = side === 'A' ? lb.bB    : lb.bA;
+            const start = side === 'A' ? lb.posAB : 1 - lb.posAB;
+            const team  = from.team;
+            for (let i = 0; i < count; i++) {
+                units.push({ from, to, progress: start, team });
+            }
+        }
+
+        // ── Basic Enemy AI ───────────────────────────────────────────────────
+        // Every 3 s: enemy connects to nearest reachable non-enemy building.
+        function enemyAI() {
+            const enemy = buildings.find(b => b.team === 'enemy');
+            if (!enemy || enemy.connections.length >= enemy.maxConnections) return;
+            const target = buildings
+                .filter(b => b !== enemy && b.team !== 'enemy' && bldDist(enemy, b) <= MAX_RANGE)
+                .sort((a, b) => bldDist(enemy, a) - bldDist(enemy, b))[0];
+            if (target) addConnection(enemy, target);
+        }
+        setInterval(enemyAI, 3000);
+
+        // ── Draw ─────────────────────────────────────────────────────────────
+        function DrawGrid(cw, ch) {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#00FFFF';
+            ctx.lineWidth   = 0.5;
+            for (let x = 0; x <= canvas.width;  x += cw) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+            }
+            for (let y = 0; y <= canvas.height; y += ch) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            }
+        }
+
+        function DrawHighlight(cw, ch) {
+            if (mouseX >= 0 && mouseY >= 0) {
+                const cx = Math.floor(mouseX / cw), cy = Math.floor(mouseY / ch);
+                if (cx !== currentCellX || cy !== currentCellY) {
+                    currentCellX = cx; currentCellY = cy; fadeStartTime = 0;
+                }
+                ctx.fillStyle = 'rgba(0,255,255,0.3)';
+                ctx.fillRect(cx * cw, cy * ch, cw, ch);
+            } else if (fadeStartTime > 0) {
+                const a = Math.max(0, 1 - (performance.now() - fadeStartTime) / HOVER_FADE);
+                if (a > 0) {
+                    ctx.fillStyle = `rgba(0,255,255,${0.3 * a})`;
+                    ctx.fillRect(currentCellX * cw, currentCellY * ch, cw, ch);
+                } else fadeStartTime = 0;
+            }
+        }
+
+        function DrawConnections() {
+            for (const conn of connections) {
+                const ca = bldCenter(conn.from), cb = bldCenter(conn.to);
+                // Split color when two opposing buildings both connect to each other
+                const hasReverse = conn.from.team !== conn.to.team &&
+                    connections.some(c => c.from === conn.to && c.to === conn.from);
+
+                ctx.save();
+                ctx.setLineDash([8, 4]);
+                ctx.lineDashOffset = -conn.dashOffset;
+                ctx.lineWidth = 3;
+
+                if (hasReverse) {
+                    const mx = (ca.x + cb.x) / 2, my = (ca.y + cb.y) / 2;
+                    ctx.shadowBlur = 8; ctx.shadowColor = conn.from.color;
+                    ctx.strokeStyle = conn.from.color;
+                    ctx.beginPath(); ctx.moveTo(ca.x, ca.y); ctx.lineTo(mx, my); ctx.stroke();
+                    ctx.shadowColor = conn.to.color; ctx.strokeStyle = conn.to.color;
+                    ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(cb.x, cb.y); ctx.stroke();
+                } else {
+                    ctx.shadowBlur = 8; ctx.shadowColor = conn.from.color;
+                    ctx.strokeStyle = conn.from.color;
+                    ctx.beginPath(); ctx.moveTo(ca.x, ca.y); ctx.lineTo(cb.x, cb.y); ctx.stroke();
+                }
+                ctx.restore();
+            }
+        }
+
+        function DrawUnits() {
+            ctx.save();
+            for (const u of units) {
+                const pt    = lerpPt(u.from, u.to, u.progress);
+                const color = u.team === 'player' ? '#4488FF'
+                            : u.team === 'enemy'  ? '#FF4444' : '#888888';
+                ctx.shadowBlur = 8; ctx.shadowColor = color;
+                ctx.fillStyle  = color;
+                ctx.beginPath(); ctx.arc(pt.x, pt.y, UNIT_RADIUS, 0, Math.PI * 2); ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function DrawBlockades() {
+            for (const key of Object.keys(lineBlockades)) {
+                const lb = lineBlockades[key];
+                const pt = lerpPt(lb.bA, lb.bB, lb.posAB);
+
+                // Line direction for offsetting count labels along the connection
+                const ca  = bldCenter(lb.bA), cb = bldCenter(lb.bB);
+                const len = Math.hypot(cb.x - ca.x, cb.y - ca.y);
+                const tx  = (cb.x - ca.x) / len; // unit tangent A→B
+                const ty  = (cb.y - ca.y) / len;
+
+                ctx.save();
+                ctx.translate(pt.x, pt.y);
+
+                // Glowing white diamond marker
+                ctx.shadowBlur = 18; ctx.shadowColor = '#FFFFFF';
+                ctx.fillStyle  = '#FFFFFF';
+                ctx.beginPath();
+                ctx.moveTo(0, -9); ctx.lineTo(9, 0);
+                ctx.lineTo(0,  9); ctx.lineTo(-9, 0);
+                ctx.closePath(); ctx.fill();
+
+                // Unit counts either side, offset along the line
+                ctx.shadowBlur = 0;
+                ctx.font = 'bold 11px monospace';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillStyle = lb.bA.color;
+                ctx.fillText(lb.sideA, -tx * 22, -ty * 22);
+                ctx.fillStyle = lb.bB.color;
+                ctx.fillText(lb.sideB,  tx * 22,  ty * 22);
+
+                ctx.restore();
+            }
+        }
+
+        function DrawBuildings() {
+            const r = CELL * 0.35;
+            for (const b of buildings) {
+                const cx = b.cellX * CELL + CELL / 2;
+                const cy = b.cellY * CELL + CELL / 2;
+
+                const glow = ctx.createRadialGradient(cx, cy, r * 0.2, cx, cy, r * 1.6);
+                glow.addColorStop(0, b.color + '44'); glow.addColorStop(1, b.color + '00');
+                ctx.fillStyle = glow;
+                ctx.beginPath(); ctx.arc(cx, cy, r * 1.6, 0, Math.PI * 2); ctx.fill();
+
+                ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.fillStyle = b.color + 'BB'; ctx.fill();
+                ctx.strokeStyle = b.color; ctx.lineWidth = 1.5; ctx.stroke();
+
+                ctx.fillStyle = '#FFF';
+                ctx.font = `bold ${Math.floor(CELL * 0.22)}px monospace`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(b.level, cx, cy);
+
+                const pip = 2, pipGap = 6, total = (b.tier - 1) * pipGap;
+                for (let i = 0; i < b.tier; i++) {
+                    ctx.beginPath();
+                    ctx.arc(cx - total / 2 + i * pipGap, cy + r + 6, pip, 0, Math.PI * 2);
+                    ctx.fillStyle = b.color; ctx.fill();
+                }
+            }
+        }
+
+        function DrawDragPreview() {
+            if (!drag || mouseX < 0) return;
+            const ca    = bldCenter(drag.building);
+            const hover = buildingAt(mouseX, mouseY);
+            const valid = hover && hover !== drag.building && bldDist(drag.building, hover) <= MAX_RANGE;
+
+            ctx.save();
+            ctx.setLineDash([6, 4]);
+            ctx.lineWidth   = 2;
+            ctx.strokeStyle = valid ? drag.building.color : 'rgba(255,255,255,0.4)';
+            ctx.shadowBlur  = valid ? 10 : 0;
+            ctx.shadowColor = drag.building.color;
+            ctx.beginPath(); ctx.moveTo(ca.x, ca.y); ctx.lineTo(mouseX, mouseY); ctx.stroke();
+
+            // Max-range indicator ring
+            ctx.setLineDash([3, 3]);
+            ctx.lineWidth   = 1;
+            ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+            ctx.shadowBlur  = 0;
+            ctx.beginPath(); ctx.arc(ca.x, ca.y, MAX_RANGE, 0, Math.PI * 2); ctx.stroke();
+            ctx.restore();
+        }
+
+        // ── Main Loop ────────────────────────────────────────────────────────
+        let lastTime = 0;
+        function render(ts) {
+            const dt = Math.min((ts - lastTime) / 1000, 0.1); // cap at 100 ms
+            lastTime = ts;
+            update(dt);
+            DrawGrid(CELL, CELL);
+            DrawHighlight(CELL, CELL);
+            DrawConnections();
+            DrawUnits();
+            DrawBlockades();
+            DrawBuildings();
+            DrawDragPreview();
+            requestAnimationFrame(render);
+        }
+
+        spawnBuildings();
+        requestAnimationFrame(render);
+    </script>
+</body>
+</html>
